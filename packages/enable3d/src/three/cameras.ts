@@ -4,7 +4,6 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { Scene } from 'phaser'
 import { PerspectiveCamera, OrthographicCamera } from '@enable3d/common/src/types'
 import {
   PerspectiveCamera as THREE_PerspectiveCamera,

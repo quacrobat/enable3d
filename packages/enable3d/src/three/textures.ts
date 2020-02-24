@@ -4,8 +4,8 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { Texture, TextureLoader, RGBAFormat, sRGBEncoding, RepeatWrapping, Material } from '@enable3d/threejs'
-import { Scene } from 'phaser'
+import { Texture, TextureLoader, RGBAFormat, RepeatWrapping, Material } from '@enable3d/threejs'
+// import { Scene } from 'phaser'
 import logger from '@enable3d/common/src/logger'
 
 export class TextureCube {
@@ -33,15 +33,17 @@ export default class Textures {
   protected add: any
   protected textureAnisotropy: number
 
-  constructor(public root: Scene) {}
+  constructor() {}
 
   /** Use third.texture.get(KEY) instead. */
   public getTexture(key: string) {
     logger(`[Texture ${key}] getTexture() is deprecated. Use third.texture.get(${key}) instead.`)
   }
 
-  protected _getTexture(key: string) {
-    const texture = new Texture()
+  protected _getTexture(_key: string) {
+    // TODO fix this
+    console.log('sorry _getTexture() is currently disabled')
+    /*const texture = new Texture()
 
     texture.image = this.root.textures.get(key).getSourceImage()
 
@@ -50,15 +52,18 @@ export default class Textures {
     texture.anisotropy = this.textureAnisotropy
     // texture.encoding = sRGBEncoding
 
-    return texture
+    return texture*/
   }
 
   protected textureCube(textures: string[]) {
+    // TODO fix this
+    console.log('sorry textureCube() is currently disabled')
+
     if (textures.length !== 6) {
       logger('You need to pass 6 textures to textureCube()')
     }
 
-    const textureCube = new TextureCube()
+    /* const textureCube = new TextureCube()
 
     textures.forEach((key, i) => {
       const texture = this._getTexture(key)
@@ -67,7 +72,7 @@ export default class Textures {
       textureCube.materials[i] = material
     })
 
-    return textureCube
+    return textureCube*/
   }
 
   protected loadTexture(url: string): Texture {

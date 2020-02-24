@@ -9,7 +9,6 @@ import {
   OrthographicCamera
 } from '@enable3d/threejs'
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader'
-import { Scene3D } from '..'
 
 /**
  * @author       Yannick Deubel (https://github.com/yandeu)
