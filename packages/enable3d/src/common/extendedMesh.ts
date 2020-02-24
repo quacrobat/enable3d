@@ -7,7 +7,7 @@
 import { AnimationClip, AnimationMixer, Mesh, Vector3, Geometry, BufferGeometry, Material } from 'three'
 import PhysicsBody from '../ammo/physicsBody'
 import { AnimationAction } from 'three/src/animation/AnimationAction'
-import logger from '../common/logger'
+import logger from './logger'
 
 interface ExtendedMesh extends Mesh {}
 

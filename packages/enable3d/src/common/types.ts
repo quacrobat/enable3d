@@ -21,11 +21,11 @@ import {
   MeshPhysicalMaterialParameters,
   Material
 } from 'three'
-import ExtendedObject3D from '../three/extendedObject3D'
+import ExtendedObject3D from '../common/extendedObject3D'
 
 export { ExtendedObject3D }
 export { AnimationAction } from 'three/src/animation/AnimationAction'
-export { ThirdPersonControls } from '../utils/thirdPersonControls'
+export { ThirdPersonControls } from '../misc/thirdPersonControls'
 export { AnimationMixer, AnimationClip, Object3D, Mesh, Material, Line, Points, Group } from 'three'
 
 export interface Phaser3DConfig {

@@ -42,8 +42,8 @@ import {
   TorusGeometry,
   TorusBufferGeometry
 } from 'three'
-import ExtendedObject3D from './extendedObject3D'
-import ExtendedMesh from './extendedMesh'
+import ExtendedObject3D from '../common/extendedObject3D'
+import ExtendedMesh from '../common/extendedMesh'
 import logger from '../common/logger'
 import DefaultMaterial from '../common/defaultMaterial'
 

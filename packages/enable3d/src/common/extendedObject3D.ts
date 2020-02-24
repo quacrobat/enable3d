@@ -4,14 +4,22 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { AnimationClip, AnimationMixer, Mesh, Vector3, Geometry, BufferGeometry, Material } from 'three'
+import { AnimationClip, AnimationMixer, Mesh, Line, Points, Object3D, Vector3 } from 'three'
 import PhysicsBody from '../ammo/physicsBody'
 import { AnimationAction } from 'three/src/animation/AnimationAction'
-import logger from '../common/logger'
+import logger from './logger'
 
-interface ExtendedMesh extends Mesh {}
+interface ExtendedObject3D extends Line, Mesh, Points {
+  isLine: any
+  isPoints: any
+  isMesh: any
+  type: any
+}
 
-class ExtendedMesh extends Mesh {
+/**
+ * Extends the Object3D class from THREE.js and implements properties from Line, Mesh and Points.
+ */
+class ExtendedObject3D extends Object3D {
   private vector3 = new Vector3()
   public shape: string
   public name: string
@@ -22,12 +30,10 @@ class ExtendedMesh extends Mesh {
   public anims: { [key: string]: AnimationClip } = {}
   public action: AnimationAction
   public currentAnimation: string = ''
-  public breakable: boolean
   public fragmentDepth: number
-  public collided: boolean
 
-  constructor(geometry?: Geometry | BufferGeometry | undefined, material?: Material | Material[] | undefined) {
-    super(geometry, material)
+  constructor() {
+    super()
     this.name = `object-${this.id}`
   }
 
@@ -65,4 +71,4 @@ class ExtendedMesh extends Mesh {
   }
 }
 
-export default ExtendedMesh
+export default ExtendedObject3D

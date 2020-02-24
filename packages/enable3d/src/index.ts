@@ -7,7 +7,7 @@
 import Third from './third'
 import Cameras from './three/cameras'
 import loadAmmoModule from './common/wasmLoader'
-import Canvas from './utils/customCanvas'
+import Canvas from './common/customCanvas'
 import { Phaser3DConfig } from './common/types'
 import * as THREE from 'three'
 

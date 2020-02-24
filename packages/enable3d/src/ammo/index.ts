@@ -19,7 +19,7 @@ import {
   TorusConfig
 } from '../common/types'
 import applyMixins from '../common/applyMixins'
-import ExtendedObject3D from '../three/extendedObject3D'
+import ExtendedObject3D from '../common/extendedObject3D'
 import Shapes from './shapes'
 import Constraints from './constraints'
 import { Scene3D } from '..'
