@@ -112,7 +112,6 @@ class ThreeGraphics {
   public physics: AmmoPhysics
 
   public scene: Scene
-  private view: any
   public renderer: WebGLRenderer
   private composer: null
   private _mixers: AnimationMixer[] = []
