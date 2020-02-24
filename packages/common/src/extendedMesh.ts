@@ -5,7 +5,8 @@
  */
 
 import { AnimationClip, AnimationMixer, Mesh, Vector3, Geometry, BufferGeometry, Material } from '@enable3d/threejs'
-// import PhysicsBody from '@enable3d/ammo/src/physicsBody'
+// Can I use circular dependencies if I only ise the typings?
+import PhysicsBody from '@enable3d/ammo/src/physicsBody'
 import { AnimationAction } from 'three/src/animation/AnimationAction'
 import logger from './logger'
 
@@ -15,8 +16,7 @@ class ExtendedMesh extends Mesh {
   private vector3 = new Vector3()
   public shape: string
   public name: string
-  // TODO add body typings
-  public body: any
+  public body: PhysicsBody
   public hasBody: boolean = false
   public animations?: AnimationClip[]
   public mixer?: AnimationMixer

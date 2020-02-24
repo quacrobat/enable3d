@@ -1,7 +1,7 @@
 {
   "name": "@enable3d/threejs",
   "version": "0.0.14",
-  "description": "",
+  "description": "This module does only export three.js",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

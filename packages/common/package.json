@@ -10,6 +10,7 @@
   "author": "Yannick Deubel",
   "license": "GNU GPLv3",
   "dependencies": {
+    "@enable3d/ammo": "^0.0.14",
     "@enable3d/threejs": "^0.0.14",
     "chroma-js": "^2.1.0",
     "three": "^0.113.2"
