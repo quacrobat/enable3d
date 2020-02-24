@@ -28,7 +28,9 @@ import { Vector3, Quaternion, Scene } from '@enable3d/threejs'
 import { createCollisionShapes } from './three-to-ammo'
 import { addTorusShape } from './torusShape'
 import Factories from '@enable3d/common/src/factories'
-export * from '@enable3d/threejs'
+
+import * as three from '@enable3d/threejs'
+export { three }
 
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}
 

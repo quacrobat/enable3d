@@ -71,7 +71,6 @@ const customCanvas = (
   }
 
   const webgl = WEBGL.isWebGL2Available() ? 'webgl2' : 'webgl'
-  console.log('webgl: ', webgl)
 
   // create context
   const myCustomContext: any = myCustomCanvas.getContext(webgl, contextCreationConfig)
