@@ -18,7 +18,6 @@ import { Scene3D } from '..'
  */
 
 export default class Transform {
-  public root: Scene3D
   public renderer: WebGLRenderer
   public camera: PerspectiveCamera | OrthographicCamera
   public new: {
@@ -47,8 +46,10 @@ export default class Transform {
   /**
    * Transforms your svg files to paths. First load your svg files using 'this.load.html(path_to_file)' in preload().
    */
-  private transformFromSVGtoShape(key: string, isCCW: boolean = false, noHoles?: boolean) {
-    const svg = this.root.cache.html.get(key)
+  private transformFromSVGtoShape(_key: string, _isCCW: boolean = false, _noHoles?: boolean) {
+    // TODO fix this
+    console.log('sorry transformFromSVGtoShape is currently disabled')
+    /*const svg = this.root.cache.html.get(key)
     if (svg) {
       const svgLoader = this.new.svgLoader()
       const shapes: Shape[] = []
@@ -59,7 +60,7 @@ export default class Transform {
       })
       return shapes
     }
-    return []
+    return []*/
   }
 
   private transformFrom3dto2d(position: Vector3): Vector2 {

@@ -93,9 +93,6 @@ import Textures from './textures'
 import Lights from './lights'
 import Factories from '@enable3d/common/src/factories'
 import CSG from './csg'
-import JoyStick from '../misc/joystick'
-import { ThirdPersonControls, ThirdPersonControlsConfig } from '../misc/thirdPersonControls'
-import { FirstPersonControls, FirstPersonControlsConfig } from '../misc/firstPersonControls'
 import { Scene3D } from '..'
 import WebXR from './webxr'
 import HeightMap from './heightmap'
@@ -124,7 +121,7 @@ class ThreeGraphics {
   private defaultMaterial: DefaultMaterial
   protected factory: Factories
 
-  constructor(public root: Scene3D, config: Phaser3DConfig = {}) {
+  constructor(config: Phaser3DConfig = {}) {
     const {
       anisotropy = 1,
       enableXR = false,
@@ -137,7 +134,6 @@ class ThreeGraphics {
     this.camera = camera
     this.renderer = renderer
 
-    // this.view = root.add.extern()
     this.scene = new Scene()
     this.factory = new Factories(this.scene)
     this.defaultMaterial = new DefaultMaterial()
@@ -169,37 +165,12 @@ class ThreeGraphics {
       this.addXRCamera()
     }
 
-    // phaser renderer
-    // this.view.render = (_renderer: WebGLRenderer) => {
-    //   if (!this.renderer.xr.isPresenting) {
-    //     this.root.updateLoopXR(this.root.sys.game.loop.time, this.root.sys.game.loop.delta)
-    //     this.renderer.state.reset()
-    //     this.renderer.render(this.scene, this.camera)
-    //   }
-    // }
-
-    // vr renderer
+    // xr renderer
     if (enableXR) {
-      let lastTime = 0
-      this.renderer.setAnimationLoop((time: number) => {
-        if (this.renderer.xr.isPresenting) {
-          const delta = time - lastTime
-          lastTime = time
-          this.root.updateLoopXR(time, delta)
-          this.renderer.state.reset()
-          this.renderer.render(this.scene, this.camera)
-        }
-      })
       // add vr button
       const vrButton = VRButton.createButton(this.renderer)
       vrButton.style.cssText += 'background: rgba(0, 0, 0, 0.8); '
       document.body.appendChild(vrButton)
-    }
-
-    if (!enableXR) {
-      root.events.on('update', (_time: number, delta: number) => {
-        this.mixers.update(delta)
-      })
     }
   }
 
@@ -208,22 +179,6 @@ class ThreeGraphics {
       add: (animationMixer: AnimationMixer) => this._mixers.push(animationMixer),
       get: () => this._mixers,
       update: (delta: number) => this._mixers?.forEach(mixer => mixer.update(delta / 1000))
-    }
-  }
-
-  get controls() {
-    return {
-      add: this.addControls
-    }
-  }
-
-  private get addControls() {
-    return {
-      firstPerson: (target: Object3D, config: FirstPersonControlsConfig) =>
-        new FirstPersonControls(this.root, target, config),
-      thirdPerson: (target: Object3D, config: ThirdPersonControlsConfig) =>
-        new ThirdPersonControls(this.root, target, config),
-      joystick: () => new JoyStick()
     }
   }
 
@@ -542,7 +497,10 @@ class ThreeGraphics {
     }
 
     if (features.includes('orbitControls')) {
-      ThreeGraphics.OrbitControls(this.camera, this.root.scale.parent)
+      // for phaser
+      // this.root is the phaser scene (scene3D)
+      // this.root.scale.parent instead of this.renderer.domElement
+      ThreeGraphics.OrbitControls(this.camera, this.renderer.domElement)
     }
   }
 
