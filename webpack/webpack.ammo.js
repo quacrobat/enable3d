@@ -8,7 +8,7 @@ module.exports = (env, argv) => {
     mode: 'production',
     entry: path.resolve(__dirname, '../packages/ammo/dist/index.js'),
     output: {
-      filename: `enable3d-ammo@${argv.packageVersion}.min.js`,
+      filename: `enable3d.ammo@${argv.packageVersion}.min.js`,
       path: path.resolve(__dirname, '../bundles'),
       library: 'AMMO',
       libraryTarget: 'umd'

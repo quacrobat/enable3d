@@ -29,8 +29,8 @@ import { createCollisionShapes } from './three-to-ammo'
 import { addTorusShape } from './torusShape'
 import Factories from '@enable3d/common/src/factories'
 
-import * as three from '@enable3d/threejs'
-export { three }
+import * as THREE from '@enable3d/threejs'
+export { THREE }
 
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}
 
@@ -110,7 +110,7 @@ class AmmoPhysics extends EventEmitter {
     const { position: pos, quaternion: quat, hasBody } = object
     const { mass = 1, autoCenter = false, offset = undefined, shapes = [], breakable = false } = config
 
-    let params = {
+    const defaultParams = {
       width: 1,
       height: 1,
       depth: 1,
@@ -120,15 +120,17 @@ class AmmoPhysics extends EventEmitter {
       tubularSegments: 8 // for the torus
     }
     let shape = 'box'
+    let params = {}
 
     if (config.shape) {
-      params = { ...params, ...config }
+      params = { ...defaultParams, ...config }
       shape = config.shape
     } else if (object.shape) {
       // @ts-ignore
-      params = { ...params, ...object?.geometry?.parameters }
+      params = { ...defaultParams, ...object?.geometry?.parameters }
       shape = object.shape
     }
+    // TODO if there are parameter undefined in params, fill with default params
 
     if (hasBody) {
       logger(`Object "${object.name}" already has a physical body!`)
