@@ -4,7 +4,7 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { Quaternion } from 'three'
+import { Quaternion } from '@enable3d/threejs'
 
 // https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=7228
 export const addTorusShape = (config: { radius: number; tube: number; tubularSegments: number }, quat: Quaternion) => {

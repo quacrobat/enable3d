@@ -7,7 +7,7 @@ import {
   WebGLRenderer,
   PerspectiveCamera,
   OrthographicCamera
-} from 'three'
+} from '@enable3d/threejs'
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader'
 import { Scene3D } from '..'
 

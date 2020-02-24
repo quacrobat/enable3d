@@ -41,7 +41,7 @@ import {
   MeshToonMaterial,
   TorusGeometry,
   TorusBufferGeometry
-} from 'three'
+} from '@enable3d/threejs'
 import ExtendedObject3D from './extendedObject3D'
 import ExtendedMesh from './extendedMesh'
 import logger from './logger'

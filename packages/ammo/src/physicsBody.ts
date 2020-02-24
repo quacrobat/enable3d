@@ -5,9 +5,9 @@
  */
 
 import AmmoPhysics from '.'
-import { ExtendedObject3D } from '../common/types'
-import { Euler, Quaternion } from 'three'
-import logger from '../common/logger'
+import { ExtendedObject3D } from '@enable3d/common/src/types'
+import { Euler, Quaternion } from '@enable3d/threejs'
+import logger from '@enable3d/common/src/logger'
 
 class PhysicsBody {
   public offset = { x: 0, y: 0, z: 0 }

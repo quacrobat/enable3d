@@ -4,8 +4,8 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { AnimationClip, AnimationMixer, Mesh, Line, Points, Object3D, Vector3 } from 'three'
-import PhysicsBody from '../ammo/physicsBody'
+import { AnimationClip, AnimationMixer, Mesh, Line, Points, Object3D, Vector3 } from '@enable3d/threejs'
+// import PhysicsBody from '@enable3d/ammo/src/physicsBody'
 import { AnimationAction } from 'three/src/animation/AnimationAction'
 import logger from './logger'
 
@@ -23,7 +23,8 @@ class ExtendedObject3D extends Object3D {
   private vector3 = new Vector3()
   public shape: string
   public name: string
-  public body: PhysicsBody
+  // TODO add body typings
+  public body: any
   public hasBody: boolean = false
   public animations?: AnimationClip[]
   public mixer?: AnimationMixer

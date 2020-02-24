@@ -1,5 +1,5 @@
 import { Water } from 'three/examples/jsm/objects/Water2'
-import { PlaneBufferGeometry, Scene, Vector2, Mesh, MeshStandardMaterial, TextureLoader } from 'three'
+import { PlaneBufferGeometry, Scene, Vector2, Mesh, MeshStandardMaterial, TextureLoader } from '@enable3d/threejs'
 
 // from this example:
 // https://threejs.org/examples/?q=water#webgl_water

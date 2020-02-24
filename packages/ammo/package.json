@@ -1,0 +1,17 @@
+{
+  "name": "@enable3d/ammo",
+  "version": "0.0.14",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Yannick Deubel",
+  "license": "GNU GPLv3",
+  "dependencies": {
+    "@enable3d/common": "^0.0.14",
+    "@enable3d/threejs": "^0.0.14",
+    "three": "^0.113.2"
+  }
+}

@@ -4,9 +4,8 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import logger from '../common/logger'
+import logger from '@enable3d/common/src/logger'
 import PhysicsBody from './physicsBody'
-import ThreeGraphics from '../three'
 import {
   SphereConfig,
   GroundConfig,
@@ -17,18 +16,18 @@ import {
   Phaser3DConfig,
   AddExistingConfig,
   TorusConfig
-} from '../common/types'
-import applyMixins from '../common/applyMixins'
-import ExtendedObject3D from '../common/extendedObject3D'
+} from '@enable3d/common/src/types'
+import applyMixins from '@enable3d/common/src/applyMixins'
+import ExtendedObject3D from '@enable3d/common/src/extendedObject3D'
 import Shapes from './shapes'
 import Constraints from './constraints'
 import Events from './events'
 import EventEmitter from 'eventemitter3'
 import Physics from './physics'
-import { Vector3, Quaternion, Scene } from 'three'
+import { Vector3, Quaternion, Scene } from '@enable3d/threejs'
 import { createCollisionShapes } from './three-to-ammo'
 import { addTorusShape } from './torusShape'
-import Factories from '../common/factories'
+import Factories from '@enable3d/common/src/factories'
 
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}
 

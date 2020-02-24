@@ -5,11 +5,11 @@
  */
 
 import ThreeGraphics from './three'
-import AmmoPhysics from './ammo'
-import { Phaser3DConfig } from './common/types'
-import { RepeatWrapping, Mesh, SphereBufferGeometry, MeshBasicMaterial, DirectionalLight } from 'three'
-import ExtendedObject3D from './common/extendedObject3D'
-import logger from './common/logger'
+import AmmoPhysics from '@enable3d/ammo/src/index'
+import { Phaser3DConfig } from '@enable3d/common/src/types'
+import { RepeatWrapping, Mesh, SphereBufferGeometry, MeshBasicMaterial, DirectionalLight } from '@enable3d/threejs'
+import ExtendedObject3D from '@enable3d/common/src/extendedObject3D'
+import logger from '@enable3d/common/src/logger'
 import { Scene3D } from '.'
 import { Sky } from 'three/examples/jsm/objects/Sky'
 
@@ -144,7 +144,6 @@ class Third extends ThreeGraphics {
 
       const distance = 400000
 
-      // @ts-ignore
       const uniforms = sky.material.uniforms
       uniforms['turbidity'].value = effectController.turbidity
       uniforms['rayleigh'].value = effectController.rayleigh

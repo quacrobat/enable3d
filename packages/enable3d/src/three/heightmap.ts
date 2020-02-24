@@ -15,9 +15,9 @@ import {
   Face3,
   Color,
   Texture
-} from 'three'
-import { ExtendedObject3D, HeightMapConfig } from '../common/types'
-import logger from '../common/logger'
+} from '@enable3d/threejs'
+import { ExtendedObject3D, HeightMapConfig } from '@enable3d/common/src/types'
+import logger from '@enable3d/common/src/logger'
 
 export default class HeightMap {
   public scene: Scene

@@ -4,9 +4,9 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { Texture, TextureLoader, RGBAFormat, sRGBEncoding, RepeatWrapping, Material } from 'three'
+import { Texture, TextureLoader, RGBAFormat, sRGBEncoding, RepeatWrapping, Material } from '@enable3d/threejs'
 import { Scene } from 'phaser'
-import logger from '../common/logger'
+import logger from '@enable3d/common/src/logger'
 
 export class TextureCube {
   public materials: Material[]

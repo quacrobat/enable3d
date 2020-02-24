@@ -62,14 +62,14 @@ import {
   HeightMapConfig,
   AddMaterial,
   TorusConfig
-} from '../common/types'
-import ExtendedObject3D from '../common/extendedObject3D'
-import applyMixins from '../common/applyMixins'
+} from '@enable3d/common/src/types'
+import ExtendedObject3D from '@enable3d/common/src/extendedObject3D'
+import applyMixins from '@enable3d/common/src/applyMixins'
 import Loaders from './loaders'
 import Cameras from './cameras'
 import Textures from './textures'
 import Lights from './lights'
-import Factories from '../common/factories'
+import Factories from '@enable3d/common/src/factories'
 import CSG from './csg'
 import JoyStick from '../misc/joystick'
 import { ThirdPersonControls, ThirdPersonControlsConfig } from '../misc/thirdPersonControls'
@@ -81,7 +81,7 @@ import HeightMap from './heightmap'
 import chroma from 'chroma-js'
 import Transform from './transform'
 import { addWater } from '../misc/water'
-import DefaultMaterial from '../common/defaultMaterial'
+import DefaultMaterial from '@enable3d/common/src/defaultMaterial'
 
 interface ThreeGraphics extends Loaders, Cameras, Textures, Lights, CSG, WebXR, HeightMap, Transform {}
 

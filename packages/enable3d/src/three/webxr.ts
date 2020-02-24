@@ -4,8 +4,8 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import ExtendedObject3D from '../common/extendedObject3D'
-import { PerspectiveCamera, OrthographicCamera, WebGLRenderer, ArrayCamera, Vector3 } from 'three'
+import ExtendedObject3D from '@enable3d/common/src/extendedObject3D'
+import { PerspectiveCamera, OrthographicCamera, WebGLRenderer, ArrayCamera, Vector3 } from '@enable3d/threejs'
 
 export default class WebXR {
   private cameraObject: ExtendedObject3D

@@ -4,12 +4,10 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { Scene3D } from '..'
 import DebugDrawer from './debugDrawer'
 import EventEmitter from 'eventemitter3'
-import ThreeGraphics from '../three'
-import { ExtendedObject3D, Phaser3DConfig } from '../common/types'
-import { Vector3, MeshLambertMaterial, Scene } from 'three'
+import { ExtendedObject3D, Phaser3DConfig } from '@enable3d/common/src/types'
+import { Vector3, MeshLambertMaterial, Scene } from '@enable3d/threejs'
 import { ConvexObjectBreaker } from './convexObjectBreaker'
 
 class Physics extends EventEmitter {

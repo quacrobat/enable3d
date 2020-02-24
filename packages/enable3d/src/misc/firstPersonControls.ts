@@ -11,7 +11,7 @@
  */
 
 import { Scene3D } from '..'
-import { Object3D, Vector2, Vector3 } from 'three'
+import { Object3D, Vector2, Vector3 } from '@enable3d/threejs'
 
 export interface FirstPersonControlsConfig {
   offset?: Vector3

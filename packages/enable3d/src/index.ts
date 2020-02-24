@@ -6,12 +6,12 @@
 
 import Third from './third'
 import Cameras from './three/cameras'
-import loadAmmoModule from './common/wasmLoader'
-import Canvas from './common/customCanvas'
-import { Phaser3DConfig } from './common/types'
-import * as THREE from 'three'
+import loadAmmoModule from '@enable3d/common/src/wasmLoader'
+import Canvas from '@enable3d/common/src/customCanvas'
+import { Phaser3DConfig } from '@enable3d/common/src/types'
+import * as THREE from '@enable3d/threejs'
 
-export * from './common/types'
+export * from '@enable3d/common/src/types'
 export { Cameras }
 export { Third }
 export { Canvas }

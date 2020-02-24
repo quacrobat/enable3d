@@ -5,7 +5,7 @@
  */
 
 import { Scene } from 'phaser'
-import { PerspectiveCamera, OrthographicCamera } from '../common/types'
+import { PerspectiveCamera, OrthographicCamera } from '@enable3d/common/src/types'
 import {
   PerspectiveCamera as THREE_PerspectiveCamera,
   OrthographicCamera as THREE_OrthographicCamera
