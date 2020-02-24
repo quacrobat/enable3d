@@ -98,7 +98,7 @@ import HeightMap from './heightmap'
 
 import chroma from 'chroma-js'
 import Transform from './transform'
-import { addWater } from '../misc/water'
+import { addWater } from './misc/water'
 import DefaultMaterial from '@enable3d/common/src/defaultMaterial'
 import { AmmoPhysics } from '@enable3d/ammo/src'
 import logger from '@enable3d/common/src/logger'
