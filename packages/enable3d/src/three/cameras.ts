@@ -12,16 +12,28 @@ import {
 } from 'three/src/Three'
 
 export default class Cameras {
-  constructor(public root: Scene) {}
-  static PerspectiveCamera(scene: Scene, config: PerspectiveCamera = {}): THREE.PerspectiveCamera {
-    const { fov = 50, aspect = scene.scale.gameSize.aspectRatio, near = 0.1, far = 2000, x = 0, y = 0, z = 0 } = config
+  static PerspectiveCamera(config: PerspectiveCamera = {}): THREE.PerspectiveCamera {
+    // for phaser
+    // aspect = scene.scale.gameSize.aspectRatio
+    const {
+      fov = 50,
+      aspect = window.innerWidth / window.innerHeight,
+      near = 0.1,
+      far = 2000,
+      x = 0,
+      y = 0,
+      z = 0
+    } = config
     const camera = new THREE_PerspectiveCamera(fov, aspect, near, far)
     camera.position.set(x, y, z)
     return camera
   }
 
-  static OrthographicCamera(scene: Scene, config: OrthographicCamera = {}): THREE.OrthographicCamera {
-    const { width, height } = scene.cameras.main
+  static OrthographicCamera(config: OrthographicCamera = {}): THREE.OrthographicCamera {
+    // for phaser
+    // const { width, height } = scene.cameras.main
+    const width = window.innerWidth
+    const height = window.innerHeight
     const {
       left = width / -100,
       right = width / 100,

@@ -19,7 +19,8 @@ import {
   Texture,
   MeshToonMaterialParameters,
   MeshPhysicalMaterialParameters,
-  Material
+  Material,
+  WebGLRenderer
 } from '@enable3d/threejs'
 import ExtendedObject3D from './extendedObject3D'
 
@@ -40,6 +41,7 @@ export interface Phaser3DConfig {
   maxSubSteps?: number
   // Default is 1/60
   fixedTimeStep?: number
+  renderer?: WebGLRenderer
 }
 
 export interface XYZ {
