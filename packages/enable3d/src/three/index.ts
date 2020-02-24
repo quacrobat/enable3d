@@ -62,9 +62,9 @@ import {
   HeightMapConfig,
   AddMaterial,
   TorusConfig
-} from '../types'
+} from '../common/types'
 import ExtendedObject3D from './extendedObject3D'
-import applyMixins from '../helpers/applyMixins'
+import applyMixins from '../common/applyMixins'
 import Loaders from './loaders'
 import Cameras from './cameras'
 import Textures from './textures'

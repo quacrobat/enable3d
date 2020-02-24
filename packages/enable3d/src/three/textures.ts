@@ -6,7 +6,7 @@
 
 import { Texture, TextureLoader, RGBAFormat, sRGBEncoding, RepeatWrapping, Material } from 'three'
 import { Scene } from 'phaser'
-import logger from '../helpers/logger'
+import logger from '../common/logger'
 
 export class TextureCube {
   public materials: Material[]

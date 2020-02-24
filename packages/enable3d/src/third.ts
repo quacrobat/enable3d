@@ -4,12 +4,12 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import ThreeGraphics from './threeWrapper'
-import AmmoPhysics from './ammoWrapper'
-import { Phaser3DConfig } from './types'
+import ThreeGraphics from './three'
+import AmmoPhysics from './ammo'
+import { Phaser3DConfig } from './common/types'
 import { RepeatWrapping, Mesh, SphereBufferGeometry, MeshBasicMaterial, DirectionalLight } from 'three'
-import ExtendedObject3D from './threeWrapper/extendedObject3D'
-import logger from './helpers/logger'
+import ExtendedObject3D from './three/extendedObject3D'
+import logger from './common/logger'
 import { Scene3D } from '.'
 import { Sky } from 'three/examples/jsm/objects/Sky'
 

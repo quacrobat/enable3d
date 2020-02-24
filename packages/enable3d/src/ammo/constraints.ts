@@ -7,7 +7,7 @@
 // Inspired by https://github.com/donmccurdy/aframe-physics-system/blob/master/src/components/ammo-constraint.js
 
 import PhysicsBody from './physicsBody'
-import { XYZ } from '../types'
+import { XYZ } from '../common/types'
 
 export default class Constraints {
   public tmpTrans: Ammo.btTransform

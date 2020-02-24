@@ -7,8 +7,8 @@
 import { Scene3D } from '..'
 import DebugDrawer from './debugDrawer'
 import EventEmitter from 'eventemitter3'
-import ThreeGraphics from '../threeWrapper'
-import { ExtendedObject3D, Phaser3DConfig } from '../types'
+import ThreeGraphics from '../three'
+import { ExtendedObject3D, Phaser3DConfig } from '../common/types'
 import { Vector3, MeshLambertMaterial, Scene } from 'three'
 import { ConvexObjectBreaker } from './convexObjectBreaker'
 

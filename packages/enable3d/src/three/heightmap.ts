@@ -16,8 +16,8 @@ import {
   Color,
   Texture
 } from 'three'
-import { ExtendedObject3D, HeightMapConfig } from '../types'
-import logger from '../helpers/logger'
+import { ExtendedObject3D, HeightMapConfig } from '../common/types'
+import logger from '../common/logger'
 
 export default class HeightMap {
   public scene: Scene

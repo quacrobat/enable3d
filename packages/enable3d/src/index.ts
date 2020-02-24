@@ -5,13 +5,13 @@
  */
 
 import Third from './third'
-import Cameras from './threeWrapper/cameras'
-import loadAmmoModule from './helpers/wasmLoader'
+import Cameras from './three/cameras'
+import loadAmmoModule from './common/wasmLoader'
 import Canvas from './utils/customCanvas'
-import { Phaser3DConfig } from './types'
+import { Phaser3DConfig } from './common/types'
 import * as THREE from 'three'
 
-export * from './types'
+export * from './common/types'
 export { Cameras }
 export { Third }
 export { Canvas }

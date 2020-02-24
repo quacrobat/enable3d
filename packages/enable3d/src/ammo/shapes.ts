@@ -14,8 +14,8 @@ import {
   ExtrudeConfig,
   TorusConfig,
   AddExistingConfig
-} from '../types'
-import Factories from '../threeWrapper/factories'
+} from '../common/types'
+import Factories from '../three/factories'
 
 interface Shapes {}
 
