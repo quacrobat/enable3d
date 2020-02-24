@@ -4,7 +4,7 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import AmmoPhysics from '.'
+import { AmmoPhysics } from '.'
 import { ExtendedObject3D } from '@enable3d/common/src/types'
 import { Euler, Quaternion } from '@enable3d/threejs'
 import logger from '@enable3d/common/src/logger'

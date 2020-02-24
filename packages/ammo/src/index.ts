@@ -28,6 +28,7 @@ import { Vector3, Quaternion, Scene } from '@enable3d/threejs'
 import { createCollisionShapes } from './three-to-ammo'
 import { addTorusShape } from './torusShape'
 import Factories from '@enable3d/common/src/factories'
+export * from '@enable3d/threejs'
 
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}
 
@@ -289,4 +290,4 @@ class AmmoPhysics extends EventEmitter {
 
 applyMixins(AmmoPhysics, [Physics, Constraints, Shapes, Events])
 
-export default AmmoPhysics
+export { AmmoPhysics }

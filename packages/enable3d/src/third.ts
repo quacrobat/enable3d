@@ -5,7 +5,7 @@
  */
 
 import ThreeGraphics from './three'
-import AmmoPhysics from '@enable3d/ammo/src/index'
+import { AmmoPhysics } from '@enable3d/ammo/src/index'
 import { Phaser3DConfig } from '@enable3d/common/src/types'
 import { RepeatWrapping, Mesh, SphereBufferGeometry, MeshBasicMaterial, DirectionalLight } from '@enable3d/threejs'
 import ExtendedObject3D from '@enable3d/common/src/extendedObject3D'
