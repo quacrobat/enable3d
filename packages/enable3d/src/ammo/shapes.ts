@@ -15,7 +15,7 @@ import {
   TorusConfig,
   AddExistingConfig
 } from '../common/types'
-import Factories from '../three/factories'
+import Factories from '../common/factories'
 
 interface Shapes {}
 

@@ -13,7 +13,7 @@ import {
   CylinderConfig,
   ExtrudeConfig,
   TorusConfig
-} from '../common/types'
+} from './types'
 import {
   SphereGeometry,
   BoxGeometry,
@@ -42,10 +42,10 @@ import {
   TorusGeometry,
   TorusBufferGeometry
 } from 'three'
-import ExtendedObject3D from '../common/extendedObject3D'
-import ExtendedMesh from '../common/extendedMesh'
-import logger from '../common/logger'
-import DefaultMaterial from '../common/defaultMaterial'
+import ExtendedObject3D from './extendedObject3D'
+import ExtendedMesh from './extendedMesh'
+import logger from './logger'
+import DefaultMaterial from './defaultMaterial'
 
 export default class Factories {
   protected defaultMaterial: DefaultMaterial

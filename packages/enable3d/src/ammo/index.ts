@@ -22,14 +22,13 @@ import applyMixins from '../common/applyMixins'
 import ExtendedObject3D from '../common/extendedObject3D'
 import Shapes from './shapes'
 import Constraints from './constraints'
-import { Scene3D } from '..'
 import Events from './events'
 import EventEmitter from 'eventemitter3'
 import Physics from './physics'
 import { Vector3, Quaternion, Scene } from 'three'
 import { createCollisionShapes } from './three-to-ammo'
 import { addTorusShape } from './torusShape'
-import Factories from '../three/factories'
+import Factories from '../common/factories'
 
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}
 
