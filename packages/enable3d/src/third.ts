@@ -41,14 +41,14 @@ class Third extends ThreeGraphics {
    * @param scene Add the current Phaser Scene
    * @param config Phaser3D Config
    */
-  constructor(scene: Scene3D, config: Phaser3DConfig) {
-    super(scene, config)
+  constructor(scene3D: Scene3D, config: Phaser3DConfig) {
+    super(scene3D, config)
 
-    if (window.__loadPhysics) this.physics = new AmmoPhysics(this, scene, config)
+    if (window.__loadPhysics) this.physics = new AmmoPhysics(this.scene, config)
 
     // remove the update event which is used by ThreeGraphics.ts and AmmoPhysics.ts
-    scene.events.once('shutdown', () => {
-      scene.events.removeListener('update')
+    scene3D.events.once('shutdown', () => {
+      scene3D.events.removeListener('update')
     })
   }
 

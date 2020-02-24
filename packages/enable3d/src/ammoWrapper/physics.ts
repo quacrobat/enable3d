@@ -9,7 +9,7 @@ import DebugDrawer from './debugDrawer'
 import EventEmitter from 'eventemitter3'
 import ThreeGraphics from '../threeWrapper'
 import { ExtendedObject3D, Phaser3DConfig } from '../types'
-import { Vector3, MeshLambertMaterial } from 'three'
+import { Vector3, MeshLambertMaterial, Scene } from 'three'
 import { ConvexObjectBreaker } from './convexObjectBreaker'
 
 class Physics extends EventEmitter {
@@ -30,7 +30,7 @@ class Physics extends EventEmitter {
   protected impactPoint: Vector3
   protected impactNormal: Vector3
 
-  constructor(protected phaser3D: ThreeGraphics, protected scene: Scene3D, public config: Phaser3DConfig = {}) {
+  constructor(protected scene: Scene, public config: Phaser3DConfig = {}) {
     super()
   }
 
@@ -48,7 +48,7 @@ class Physics extends EventEmitter {
     // setup ammo physics
     this.setupPhysicsWorld()
 
-    this.debugDrawer = new DebugDrawer(this.phaser3D.scene, this.physicsWorld, {})
+    this.debugDrawer = new DebugDrawer(this.scene, this.physicsWorld, {})
 
     /**
      * TODO add ghost object
@@ -60,11 +60,11 @@ class Physics extends EventEmitter {
     // this.physicsWorld.addCollisionObject(ghost)
 
     // run the phaser update method
-    if (!this.phaser3D.isXrEnabled)
+    /*if (!this.phaser3D.isXrEnabled)
       this.scene.events.on('update', (_time: number, delta: number) => {
         this.update(delta)
         this.updateDebugger()
-      })
+      })*/
   }
 
   public updateDebugger() {
@@ -91,7 +91,7 @@ class Physics extends EventEmitter {
     object.fragmentDepth = parent.fragmentDepth + 1
 
     // Add the object to the scene
-    this.phaser3D.scene.add(object)
+    this.scene.add(object)
 
     // Add physics to the object
     // @ts-ignore
@@ -105,7 +105,7 @@ class Physics extends EventEmitter {
   }
 
   private removeDebris(object: any) {
-    this.phaser3D.scene.remove(object)
+    this.scene.remove(object)
     this.physicsWorld.removeRigidBody(object.body.ammo)
     delete this.objectsAmmo[object.ptr]
   }

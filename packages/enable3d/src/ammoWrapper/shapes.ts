@@ -15,7 +15,7 @@ import {
   TorusConfig,
   AddExistingConfig
 } from '../types'
-import ThreeGraphics from '../threeWrapper'
+import Factories from '../threeWrapper/factories'
 
 interface Shapes {}
 
@@ -24,42 +24,41 @@ class Shapes {
   public physicsWorld: Ammo.btDiscreteDynamicsWorld
   protected objectsAmmo: { [ptr: number]: any } = {}
   protected addExisting: (object: ExtendedObject3D, config?: AddExistingConfig) => void
-
-  constructor(protected phaser3D: ThreeGraphics) {}
+  protected factory: Factories
 
   protected addSphere(sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}) {
-    const sphere = this.phaser3D.add.sphere(sphereConfig, materialConfig)
+    const sphere = this.factory.addSphere(sphereConfig, materialConfig)
     this.addExisting(sphere, sphereConfig)
     return sphere
   }
 
   protected addBox(boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) {
-    const box = this.phaser3D.add.box(boxConfig, materialConfig)
+    const box = this.factory.addBox(boxConfig, materialConfig)
     this.addExisting(box, boxConfig)
     return box
   }
 
   protected addGround(groundConfig: GroundConfig, materialConfig: MaterialConfig = {}) {
-    const ground = this.phaser3D.add.ground(groundConfig, materialConfig)
+    const ground = this.factory.addGround(groundConfig, materialConfig)
     const config = { ...groundConfig, mass: 0, collisionFlags: 1 }
     this.addExisting(ground, config)
     return ground
   }
 
   protected addCylinder(cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) {
-    const cylinder = this.phaser3D.add.cylinder(cylinderConfig, materialConfig)
+    const cylinder = this.factory.addCylinder(cylinderConfig, materialConfig)
     this.addExisting(cylinder, cylinderConfig)
     return cylinder
   }
 
   protected addTorus(torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) {
-    const torus = this.phaser3D.add.torus(torusConfig, materialConfig)
+    const torus = this.factory.addTorus(torusConfig, materialConfig)
     this.addExisting(torus, torusConfig)
     return torus
   }
 
   protected addExtrude(extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) {
-    const object = this.phaser3D.add.extrude(extrudeConfig, materialConfig)
+    const object = this.factory.addExtrude(extrudeConfig, materialConfig)
     object.translateX(1)
     this.addExisting(object)
     return object

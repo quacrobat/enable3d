@@ -26,9 +26,10 @@ import { Scene3D } from '..'
 import Events from './events'
 import EventEmitter from 'eventemitter3'
 import Physics from './physics'
-import { Vector3, Quaternion } from 'three'
+import { Vector3, Quaternion, Scene } from 'three'
 import { createCollisionShapes } from './three-to-ammo'
 import { addTorusShape } from './torusShape'
+import Factories from '../threeWrapper/factories'
 
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}
 
@@ -38,9 +39,12 @@ class AmmoPhysics extends EventEmitter {
   protected objectsAmmo: { [ptr: number]: any } = {}
   protected earlierDetectedCollisions: { combinedName: string; collision: boolean }[] = []
   protected gravity: { x: number; y: number; z: number }
+  protected factory: Factories
 
-  constructor(protected phaser3D: ThreeGraphics, protected scene: Scene3D, public config: Phaser3DConfig = {}) {
+  constructor(public scene: Scene, public config: Phaser3DConfig = {}) {
     super()
+
+    this.factory = new Factories(scene)
 
     this.emptyV3 = new Vector3()
     this.impactPoint = new Vector3()

@@ -41,7 +41,8 @@ import {
   HemisphereLight,
   AmbientLight,
   PointLight,
-  GammaEncoding
+  GammaEncoding,
+  Material
 } from 'three/src/Three'
 
 import {
@@ -80,8 +81,9 @@ import HeightMap from './heightmap'
 import chroma from 'chroma-js'
 import Transform from './transform'
 import { addWater } from '../utils/water'
+import DefaultMaterial from '../common/defaultMaterial'
 
-interface ThreeGraphics extends Loaders, Cameras, Textures, Lights, Factories, CSG, WebXR, HeightMap, Transform {}
+interface ThreeGraphics extends Loaders, Cameras, Textures, Lights, CSG, WebXR, HeightMap, Transform {}
 
 class ThreeGraphics {
   public scene: Scene
@@ -91,7 +93,8 @@ class ThreeGraphics {
   private _mixers: AnimationMixer[] = []
   public camera: THREE_PerspectiveCamera | THREE_OrthographicCamera
   public readonly isXrEnabled: boolean
-  private defaultMaterial: MeshLambertMaterial
+  private defaultMaterial: DefaultMaterial
+  protected factory: Factories
 
   constructor(public root: Scene3D, config: Phaser3DConfig = {}) {
     const { anisotropy = 1, enableXR = false, camera = Cameras.PerspectiveCamera(root, { z: 25, y: 5 }) } = config
@@ -100,8 +103,9 @@ class ThreeGraphics {
     this.view = root.add.extern()
     this.scene = new Scene()
     this.textureAnisotropy = anisotropy
+    this.factory = new Factories(this.scene)
 
-    this.defaultMaterial = new MeshLambertMaterial({ color: 0xcccccc })
+    this.defaultMaterial = new DefaultMaterial()
 
     this.renderer = new WebGLRenderer({
       canvas: root.sys.game.canvas as HTMLCanvasElement,
@@ -217,8 +221,8 @@ class ThreeGraphics {
     }
   }
 
-  protected getDefaultMaterial() {
-    return this.defaultMaterial
+  protected getDefaultMaterial(): Material {
+    return this.defaultMaterial.get()
   }
 
   /**
@@ -277,25 +281,26 @@ class ThreeGraphics {
       // spotLight: config => this.addSpotLight(config),
 
       // effectComposer: () => this.addEffectComposer(),
-      mesh: (mesh: any) => this.addMesh(mesh),
+      mesh: (mesh: any) => this.factory.addMesh(mesh),
       // group: (...children) => this.addGroup(children),
       existing: (object: ExtendedObject3D | Mesh | Line | Points) => this.addExisting(object),
       heightMap: (texture: Texture, config: HeightMapConfig = {}) => this.addHeightMap(texture, config),
       //  Geometry
-      box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) => this.addBox(boxConfig, materialConfig),
+      box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.factory.addBox(boxConfig, materialConfig),
       ground: (groundConfig: GroundConfig, materialConfig: MaterialConfig = {}) =>
-        this.addGround(groundConfig, materialConfig),
+        this.factory.addGround(groundConfig, materialConfig),
       //...
       sphere: (sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.addSphere(sphereConfig, materialConfig),
+        this.factory.addSphere(sphereConfig, materialConfig),
       cylinder: (cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.addCylinder(cylinderConfig, materialConfig),
+        this.factory.addCylinder(cylinderConfig, materialConfig),
       torus: (torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.addTorus(torusConfig, materialConfig),
+        this.factory.addTorus(torusConfig, materialConfig),
       extrude: (extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) =>
-        this.addExtrude(extrudeConfig, materialConfig),
+        this.factory.addExtrude(extrudeConfig, materialConfig),
       //...
-      material: (materialConfig: MaterialConfig = {}) => this.addMaterial(materialConfig),
+      material: (materialConfig: MaterialConfig = {}) => this.factory.addMaterial(materialConfig),
       water: (config: any) => addWater(config, this.scene)
     }
   }
@@ -324,15 +329,16 @@ class ThreeGraphics {
     heightMap: HeightMapObject
   } {
     return {
-      box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) => this.makeBox(boxConfig, materialConfig),
+      box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.factory.makeBox(boxConfig, materialConfig),
       sphere: (sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.makeSphere(sphereConfig, materialConfig),
+        this.factory.makeSphere(sphereConfig, materialConfig),
       cylinder: (cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.makeCylinder(cylinderConfig, materialConfig),
+        this.factory.makeCylinder(cylinderConfig, materialConfig),
       torus: (torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.makeTorus(torusConfig, materialConfig),
+        this.factory.makeTorus(torusConfig, materialConfig),
       extrude: (extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) =>
-        this.makeExtrude(extrudeConfig, materialConfig),
+        this.factory.makeExtrude(extrudeConfig, materialConfig),
       heightMap: (texture: Texture, config: HeightMapConfig = {}) => this.makeHeightMap(texture, config)
     }
   }
@@ -342,6 +348,6 @@ class ThreeGraphics {
   }
 }
 
-applyMixins(ThreeGraphics, [Loaders, Cameras, Textures, Lights, Factories, CSG, WebXR, HeightMap, Transform])
+applyMixins(ThreeGraphics, [Loaders, Cameras, Textures, Lights, CSG, WebXR, HeightMap, Transform])
 
 export default ThreeGraphics

@@ -42,16 +42,19 @@ import {
   TorusGeometry,
   TorusBufferGeometry
 } from 'three'
-import Textures from './textures'
 import ExtendedObject3D from './extendedObject3D'
 import ExtendedMesh from './extendedMesh'
 import logger from '../helpers/logger'
+import DefaultMaterial from '../common/defaultMaterial'
 
-export default class Factories extends Textures {
-  public scene: Scene
-  protected getDefaultMaterial: () => MeshLambertMaterial
+export default class Factories {
+  protected defaultMaterial: DefaultMaterial
 
-  protected addMesh(mesh: Object3D) {
+  constructor(public scene: Scene) {
+    this.defaultMaterial = new DefaultMaterial()
+  }
+
+  public addMesh(mesh: Object3D) {
     if (Array.isArray(mesh)) {
       for (let i = 0; i < mesh.length; i++) {
         this.scene.add(mesh[i])
@@ -62,7 +65,7 @@ export default class Factories extends Textures {
     return this
   }
 
-  protected createMesh(geometry: any, material: Material | Material[], position: XYZ): Line | Points | Mesh {
+  public createMesh(geometry: any, material: Material | Material[], position: XYZ): Line | Points | Mesh {
     const { x = 0, y = 0, z = 0 } = position
 
     let obj
@@ -83,7 +86,7 @@ export default class Factories extends Textures {
     return obj
   }
 
-  protected makeExtrude(extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig) {
+  public makeExtrude(extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig) {
     const { x, y, z, name, shape, autoCenter = true, breakable = false, bufferGeometry = true, ...rest } = extrudeConfig
     const { depth = 1, bevelEnabled = false } = rest
     const geometry =
@@ -99,13 +102,13 @@ export default class Factories extends Textures {
     return mesh
   }
 
-  protected addExtrude(extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  public addExtrude(extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeExtrude(extrudeConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }
 
-  protected makeSphere(sphereConfig: SphereConfig, materialConfig: MaterialConfig): ExtendedObject3D {
+  public makeSphere(sphereConfig: SphereConfig, materialConfig: MaterialConfig): ExtendedObject3D {
     const { x, y, z, name, breakable = false, bufferGeometry = true, ...rest } = sphereConfig
     const geometry =
       bufferGeometry || breakable
@@ -134,13 +137,13 @@ export default class Factories extends Textures {
     return mesh
   }
 
-  protected addSphere(sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  public addSphere(sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeSphere(sphereConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }
 
-  protected makeBox(boxConfig: BoxConfig, materialConfig: MaterialConfig): ExtendedObject3D {
+  public makeBox(boxConfig: BoxConfig, materialConfig: MaterialConfig): ExtendedObject3D {
     const { x, y, z, name, breakable = false, bufferGeometry = true, ...rest } = boxConfig
     const geometry =
       bufferGeometry || breakable
@@ -167,20 +170,20 @@ export default class Factories extends Textures {
     return mesh
   }
 
-  protected addBox(boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  public addBox(boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeBox(boxConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }
 
-  protected addGround(groundConfig: GroundConfig, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  public addGround(groundConfig: GroundConfig, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeBox(groundConfig, materialConfig)
     obj.rotateX(THREE_Math.degToRad(90))
     this.scene.add(obj)
     return obj
   }
 
-  protected makeCylinder(cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  public makeCylinder(cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const { x, y, z, name, breakable = false, bufferGeometry = true, ...rest } = cylinderConfig
     const geometry =
       bufferGeometry || breakable
@@ -211,14 +214,14 @@ export default class Factories extends Textures {
     return mesh
   }
 
-  protected addCylinder(cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  public addCylinder(cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeCylinder(cylinderConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }
 
   // https://threejs.org/docs/index.html#api/en/geometries/TorusBufferGeometry
-  protected makeTorus(torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  public makeTorus(torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const { x, y, z, name, breakable = false, bufferGeometry = true, ...rest } = torusConfig
     const geometry =
       bufferGeometry || breakable
@@ -243,20 +246,20 @@ export default class Factories extends Textures {
     return mesh
   }
 
-  protected addTorus(torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  public addTorus(torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeTorus(torusConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }
 
-  protected addMaterial(materialConfig: MaterialConfig = {}) {
+  public addMaterial(materialConfig: MaterialConfig = {}) {
     const type = Object.keys(materialConfig)[0]
     let material: Material | Material[]
 
-    if (type) {
-      const { map } = materialConfig[type]
-      if (typeof map === 'string') materialConfig[type].map = this.loadTexture(map)
-    }
+    // if (type) {
+    //   const { map } = materialConfig[type]
+    //   if (typeof map === 'string') materialConfig[type].map = this.loadTexture(map)
+    // }
 
     switch (type) {
       case 'basic':
@@ -279,7 +282,7 @@ export default class Factories extends Textures {
           material = new MeshPhysicalMaterial(materialConfig.physical)
         } else {
           logger('You need to pass parameters to the physical material. (Fallback to default material)')
-          material = this.getDefaultMaterial()
+          material = this.defaultMaterial.get()
         }
         break
       case 'toon':
@@ -292,10 +295,10 @@ export default class Factories extends Textures {
         material = new PointsMaterial(materialConfig.points)
         break
       case 'custom':
-        material = materialConfig.custom || this.getDefaultMaterial()
+        material = materialConfig.custom || this.defaultMaterial.get()
         break
       default:
-        material = this.getDefaultMaterial()
+        material = this.defaultMaterial.get()
         break
     }
 
