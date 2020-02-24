@@ -93,7 +93,6 @@ import Textures from './textures'
 import Lights from './lights'
 import Factories from '@enable3d/common/src/factories'
 import CSG from './csg'
-import { Scene3D } from '..'
 import WebXR from './webxr'
 import HeightMap from './heightmap'
 
@@ -348,33 +347,36 @@ class ThreeGraphics {
 
     // adding some boxes (with physics)
     for (let i = 0; i < numberOfElements; i++) {
-      let materials = ['standard', 'basic', 'normal', 'phong', 'line', 'points']
+      const materials = ['standard', 'basic', 'normal', 'phong', 'line', 'points']
+      const Between = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min)
+      const RandomPick = (array: Array<string>) => array[Math.floor(Math.random() * array.length)]
+
       if (Math.random() > 0.5) {
         this.physics.add
           .box(
             {
-              x: Phaser.Math.Between(-10, 10),
-              y: Phaser.Math.Between(10, 20),
-              z: Phaser.Math.Between(-10, 10),
-              width: Phaser.Math.Between(1, 2) / 10,
-              height: Phaser.Math.Between(1, 2) / 10,
-              depth: Phaser.Math.Between(1, 2) / 10,
+              x: Between(-10, 10),
+              y: Between(10, 20),
+              z: Between(-10, 10),
+              width: Between(1, 2) / 10,
+              height: Between(1, 2) / 10,
+              depth: Between(1, 2) / 10,
               mass: 1
             },
-            { [Phaser.Math.RND.pick(materials)]: { color: Math.floor(Math.random() * 0xffffff) } }
+            { [RandomPick(materials)]: { color: Math.floor(Math.random() * 0xffffff) } }
           )
           .body.setRestitution(Math.floor(Math.random() * 10) / 20)
       } else {
         this.physics.add
           .sphere(
             {
-              x: Phaser.Math.Between(-10, 10),
-              y: Phaser.Math.Between(10, 20),
-              z: Phaser.Math.Between(-10, 10),
-              radius: Phaser.Math.Between(1, 2) / 10,
+              x: Between(-10, 10),
+              y: Between(10, 20),
+              z: Between(-10, 10),
+              radius: Between(1, 2) / 10,
               mass: 1
             },
-            { [Phaser.Math.RND.pick(materials)]: { color: Math.floor(Math.random() * 0xffffff) } }
+            { [RandomPick(materials)]: { color: Math.floor(Math.random() * 0xffffff) } }
           )
           .body.setRestitution(Math.floor(Math.random() * 10) / 20)
       }
