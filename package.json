@@ -10,6 +10,7 @@
     "start:threejs": "cd packages/threejs && tsc --watch",
     "start:dev": "cd packages/dev && npm start",
     "prune-node-modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "bundle:ammo": "webpack --config webpack/webpack.ammo.js",
     "build": "npm-run-all build:*",
     "build:enable3d": "cd packages/enable3d && tsc",
     "build:dev": "cd packages/dev && npm run build",
@@ -31,6 +32,10 @@
   "homepage": "https://github.com/yandeu/enable3d#readme",
   "devDependencies": {
     "lerna": "^3.19.0",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   }
 }
