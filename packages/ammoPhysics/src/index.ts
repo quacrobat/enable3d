@@ -45,6 +45,17 @@ class AmmoPhysics extends EventEmitter {
   constructor(public scene: Scene, public config: Phaser3DConfig = {}) {
     super()
 
+    const version = `three.js version ${THREE.REVISION}`
+    console.log(
+      `%c %c %c %c %c ${version} %c https://threejs.org/`,
+      'background: #ff0000',
+      'background: #ffff00',
+      'background: #00ff00',
+      'background: #00ffff',
+      'color: #fff; background: #000000;',
+      'background: none'
+    )
+
     this.factory = new Factories(scene)
 
     this.emptyV3 = new Vector3()
