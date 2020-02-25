@@ -24,12 +24,12 @@ import Constraints from './constraints'
 import Events from './events'
 import EventEmitter from 'eventemitter3'
 import Physics from './physics'
-import { Vector3, Quaternion, Scene } from '@enable3d/threejs'
+import { Vector3, Quaternion, Scene } from '@enable3d/three-wrapper'
 import { createCollisionShapes } from './three-to-ammo'
 import { addTorusShape } from './torusShape'
 import Factories from '@enable3d/common/src/factories'
 
-import * as THREE from '@enable3d/threejs'
+import * as THREE from '@enable3d/three-wrapper'
 export { THREE }
 
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}

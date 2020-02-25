@@ -37,7 +37,7 @@ const HEIGHTFIELD_DATA_TYPE = {
 }
 
 import ExtendedObject3d from '@enable3d/common/src/extendedObject3D'
-import { Vector3, Matrix4, BufferGeometry, Quaternion, Box3 } from '@enable3d/threejs'
+import { Vector3, Matrix4, BufferGeometry, Quaternion, Box3 } from '@enable3d/three-wrapper'
 import logger from '@enable3d/common/src/logger'
 
 const hasUpdateMatricesFunction = ExtendedObject3d.prototype.hasOwnProperty('updateMatrices')

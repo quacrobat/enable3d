@@ -7,8 +7,8 @@ import {
   WebGLRenderer,
   PerspectiveCamera,
   OrthographicCamera
-} from '@enable3d/threejs'
-import { SVGLoader } from '@enable3d/threejs/src/examples'
+} from '@enable3d/three-wrapper'
+import { SVGLoader } from '@enable3d/three-wrapper/src/examples'
 
 /**
  * @author       Yannick Deubel (https://github.com/yandeu)

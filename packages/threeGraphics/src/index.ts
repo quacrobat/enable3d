@@ -4,10 +4,10 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { OrbitControls } from '@enable3d/threejs/src/examples'
-import { SVGLoader } from '@enable3d/threejs/src/examples'
-import { VRButton } from '@enable3d/threejs/src/examples'
-import { Sky } from '@enable3d/threejs/src/examples'
+import { OrbitControls } from '@enable3d/three-wrapper/src/examples'
+import { SVGLoader } from '@enable3d/three-wrapper/src/examples'
+import { VRButton } from '@enable3d/three-wrapper/src/examples'
+import { Sky } from '@enable3d/three-wrapper/src/examples'
 
 type WarpedStartFeatures =
   | 'light'
@@ -65,7 +65,7 @@ import {
   SphereBufferGeometry,
   MeshBasicMaterial,
   RepeatWrapping
-} from '@enable3d/threejs'
+} from '@enable3d/three-wrapper'
 
 import {
   BoxConfig,

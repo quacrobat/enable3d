@@ -16,7 +16,7 @@ export { Cameras }
 export { Third }
 export { Canvas }
 
-import * as THREE from '@enable3d/threejs'
+import * as THREE from '@enable3d/three-wrapper'
 export { THREE }
 
 export class Scene3D extends Phaser.Scene {

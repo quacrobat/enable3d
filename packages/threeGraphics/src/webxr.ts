@@ -5,7 +5,7 @@
  */
 
 import ExtendedObject3D from '@enable3d/common/src/extendedObject3D'
-import { PerspectiveCamera, OrthographicCamera, WebGLRenderer, ArrayCamera, Vector3 } from '@enable3d/threejs'
+import { PerspectiveCamera, OrthographicCamera, WebGLRenderer, ArrayCamera, Vector3 } from '@enable3d/three-wrapper'
 
 export default class WebXR {
   private cameraObject: ExtendedObject3D

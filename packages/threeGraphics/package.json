@@ -13,7 +13,7 @@
   "dependencies": {
     "@enable3d/ammo-physics": "^0.0.14",
     "@enable3d/common": "^0.0.14",
-    "@enable3d/threejs": "^0.0.14",
+    "@enable3d/three-wrapper": "^0.0.14",
     "chroma-js": "^2.1.0"
   },
   "devDependencies": {

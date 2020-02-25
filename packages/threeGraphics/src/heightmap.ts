@@ -15,7 +15,7 @@ import {
   Face3,
   Color,
   Texture
-} from '@enable3d/threejs'
+} from '@enable3d/three-wrapper'
 import { ExtendedObject3D, HeightMapConfig } from '@enable3d/common/src/types'
 import logger from '@enable3d/common/src/logger'
 

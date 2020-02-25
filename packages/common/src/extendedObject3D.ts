@@ -4,10 +4,10 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { AnimationClip, AnimationMixer, Mesh, Line, Points, Object3D, Vector3 } from '@enable3d/threejs'
+import { AnimationClip, AnimationMixer, Mesh, Line, Points, Object3D, Vector3 } from '@enable3d/three-wrapper'
 // Can I use circular dependencies if I only ise the typings?
 import PhysicsBody from '@enable3d/ammo-physics/src/physicsBody'
-import { AnimationAction } from '@enable3d/threejs'
+import { AnimationAction } from '@enable3d/three-wrapper'
 import logger from './logger'
 
 interface ExtendedObject3D extends Line, Mesh, Points {

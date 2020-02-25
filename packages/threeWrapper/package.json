@@ -1,10 +1,10 @@
 {
-  "name": "@enable3d/threejs",
+  "name": "@enable3d/three-wrapper",
   "version": "0.0.14",
   "description": "This module does only export three.js",
   "main": "dist/index.js",
   "scripts": {
-    "tsc":"tsc",
+    "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
