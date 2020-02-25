@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "rootDir": "./packages",
+    "baseUrl": "./packages",
+    "paths": {
+      "@enable3d/*": ["*/src"]
+    },
     "target": "ES5",
     "module": "ESNext",
     "lib": ["DOM", "ESNext", "ScriptHost"],
@@ -19,5 +24,6 @@
     "noImplicitReturns": true,
     "allowJs": true
   },
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": ["./src/**/*", "./types/**/*"],
+  "exclude": ["dist", /* "node_modules",*/ "**/*.spec.ts"]
 }

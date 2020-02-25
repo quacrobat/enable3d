@@ -6,7 +6,7 @@
 
 import { AnimationClip, AnimationMixer, Mesh, Line, Points, Object3D, Vector3 } from '@enable3d/threejs'
 // Can I use circular dependencies if I only ise the typings?
-import PhysicsBody from '@enable3d/ammo/src/physicsBody'
+import PhysicsBody from '@enable3d/ammo-physics/src/physicsBody'
 import { AnimationAction } from 'three/src/animation/AnimationAction'
 import logger from './logger'
 

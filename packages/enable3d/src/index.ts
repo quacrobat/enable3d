@@ -6,7 +6,7 @@
 
 import Third from './third'
 import Phaser from 'phaser'
-import Cameras from '@enable3d/three/src/cameras'
+import Cameras from '@enable3d/three-graphics/src/cameras'
 import loadAmmoModule from '@enable3d/common/src/wasmLoader'
 import Canvas from '@enable3d/common/src/customCanvas'
 import { Phaser3DConfig } from '@enable3d/common/src/types'

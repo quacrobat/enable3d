@@ -4,7 +4,7 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import ThreeGraphics from '@enable3d/three/src/index'
+import ThreeGraphics from '@enable3d/three-graphics/src/index'
 import { Phaser3DConfig } from '@enable3d/common/src/types'
 import { Scene3D } from '.'
 import { WebGLRenderer, Object3D } from '@enable3d/threejs'

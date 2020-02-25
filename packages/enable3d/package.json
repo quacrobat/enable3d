@@ -29,9 +29,9 @@
   },
   "homepage": "https://enable3d.io",
   "dependencies": {
-    "@enable3d/ammo": "^0.0.14",
+    "@enable3d/ammo-physics": "^0.0.14",
     "@enable3d/common": "^0.0.14",
-    "@enable3d/three": "^0.0.14",
+    "@enable3d/three-graphics": "^0.0.14",
     "@enable3d/threejs": "^0.0.14",
     "three": "^0.113.2",
     "chroma-js": "^2.1.0",

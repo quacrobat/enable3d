@@ -4,9 +4,9 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js'
-import { VRButton } from 'three/examples/jsm/webxr/VRButton.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader'
+import { VRButton } from 'three/examples/jsm/webxr/VRButton'
 import { Sky } from 'three/examples/jsm/objects/Sky'
 
 type WarpedStartFeatures =
@@ -65,7 +65,7 @@ import {
   SphereBufferGeometry,
   MeshBasicMaterial,
   RepeatWrapping
-} from 'three/src/Three'
+} from 'three'
 
 import {
   BoxConfig,
@@ -100,7 +100,7 @@ import chroma from 'chroma-js'
 import Transform from './transform'
 import { addWater } from './misc/water'
 import DefaultMaterial from '@enable3d/common/src/defaultMaterial'
-import { AmmoPhysics } from '@enable3d/ammo/src'
+import { AmmoPhysics } from '@enable3d/ammo-physics/src/index'
 import logger from '@enable3d/common/src/logger'
 
 interface ThreeGraphics extends Loaders, Cameras, Textures, Lights, CSG, WebXR, HeightMap, Transform {}

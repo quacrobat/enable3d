@@ -6,7 +6,7 @@ module.exports = (env, argv) => {
   return {
     mode: 'production',
     devtool: 'source-map',
-    entry: path.resolve(__dirname, './src/bundle.ts'),
+    entry: path.resolve(__dirname, '../packages/enable3d/src/index.ts'),
     output: {
       filename: `enable3d@${argv.packageVersion}.min.js`,
       path: path.resolve(__dirname, `${argv.path}`),
