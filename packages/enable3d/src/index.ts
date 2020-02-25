@@ -5,21 +5,22 @@
  */
 
 import Third from './third'
-import { Scene, Types } from 'phaser'
+import Phaser from 'phaser'
 import Cameras from '@enable3d/three/src/cameras'
 import loadAmmoModule from '@enable3d/common/src/wasmLoader'
 import Canvas from '@enable3d/common/src/customCanvas'
 import { Phaser3DConfig } from '@enable3d/common/src/types'
-import * as THREE from '@enable3d/threejs'
 
 export * from '@enable3d/common/src/types'
 export { Cameras }
 export { Third }
 export { Canvas }
+
+import * as THREE from '@enable3d/threejs'
 export { THREE }
 
-export class Scene3D extends Scene {
-  constructor(config: string | Types.Scenes.SettingsConfig) {
+export class Scene3D extends Phaser.Scene {
+  constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
     super(config)
   }
 
