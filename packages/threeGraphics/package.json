@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "tsc": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "bundle": "webpack --config ../../webpack/webpack.threeGraphics.js --path=../bundles --packageVersion=${npm_package_version}"
   },
   "keywords": [],
   "author": "Yannick Deubel",
