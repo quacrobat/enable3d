@@ -4,8 +4,8 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
+import { GLTFLoader } from '@enable3d/threejs/src/examples'
+import { FBXLoader } from '@enable3d/threejs/src/examples'
 
 export default class Loaders {
   constructor() {}

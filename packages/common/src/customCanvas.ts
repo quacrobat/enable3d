@@ -7,7 +7,9 @@
 // copied from https://phaser.io/examples/v3/view/game-config/custom-webgl-canvas
 // copied from https://github.com/mrdoob/three.js/blob/dev/src/renderers/WebGLRenderer.js
 
-import { WEBGL } from 'three/examples/jsm/WebGL'
+import { WEBGL, OrbitControls } from '@enable3d/threejs/src/examples'
+
+console.log(OrbitControls)
 
 interface CustomCanvasConfig {
   antialias?: boolean

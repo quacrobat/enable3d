@@ -8,7 +8,7 @@ import {
   PerspectiveCamera,
   OrthographicCamera
 } from '@enable3d/threejs'
-import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader'
+import { SVGLoader } from '@enable3d/threejs/src/examples'
 
 /**
  * @author       Yannick Deubel (https://github.com/yandeu)

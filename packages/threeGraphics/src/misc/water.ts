@@ -1,4 +1,4 @@
-import { Water } from 'three/examples/jsm/objects/Water2'
+import { Water } from '@enable3d/threejs/src/examples'
 import { PlaneBufferGeometry, Scene, Vector2, Mesh, MeshStandardMaterial, TextureLoader } from '@enable3d/threejs'
 
 // from this example:

@@ -8,7 +8,7 @@ import { PerspectiveCamera, OrthographicCamera } from '@enable3d/common/src/type
 import {
   PerspectiveCamera as THREE_PerspectiveCamera,
   OrthographicCamera as THREE_OrthographicCamera
-} from 'three/src/Three'
+} from '@enable3d/threejs'
 
 export default class Cameras {
   static PerspectiveCamera(config: PerspectiveCamera = {}): THREE.PerspectiveCamera {

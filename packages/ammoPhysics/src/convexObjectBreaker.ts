@@ -34,7 +34,7 @@
  */
 
 import { Line3, Mesh, Plane, Vector3 } from '@enable3d/threejs'
-import { ConvexBufferGeometry } from 'three/examples/jsm/geometries/ConvexGeometry'
+import { ConvexBufferGeometry } from '@enable3d/threejs/src/examples'
 import logger from '@enable3d/common/src/logger'
 
 const ConvexObjectBreaker = function(minSizeForBreak?: number, smallDelta?: number) {

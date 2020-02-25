@@ -25,7 +25,7 @@ import {
 import ExtendedObject3D from './extendedObject3D'
 
 export { ExtendedObject3D }
-export { AnimationAction } from 'three/src/animation/AnimationAction'
+export { AnimationAction } from '@enable3d/threejs'
 // TODO fix this export
 // export { ThirdPersonControls } from '../misc/thirdPersonControls'
 export { AnimationMixer, AnimationClip, Object3D, Mesh, Material, Line, Points, Group } from '@enable3d/threejs'
