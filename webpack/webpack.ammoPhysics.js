@@ -6,11 +6,12 @@ const path = require('path')
 module.exports = (env, argv) => {
   return {
     mode: 'production',
-    entry: path.resolve(__dirname, '../packages/ammo/src/index.ts'),
+    devtool: 'source-map',
+    entry: path.resolve(__dirname, '../packages/ammoPhysics/src/index.ts'),
     output: {
-      filename: `enable3d.ammo@${argv.packageVersion}.min.js`,
-      path: path.resolve(__dirname, '../bundles'),
-      library: 'AMMO',
+      filename: `enable3d.ammoPhysics@${argv.packageVersion}.min.js`,
+      path: path.resolve(__dirname, `${argv.path}`),
+      library: 'ENABLE3D',
       libraryTarget: 'umd'
     },
     resolve: {
