@@ -28,9 +28,7 @@ import { Vector3, Quaternion, Scene } from '@enable3d/three-wrapper'
 import { createCollisionShapes } from './three-to-ammo'
 import { addTorusShape } from './torusShape'
 import Factories from '@enable3d/common/src/factories'
-
-import * as THREE from '@enable3d/three-wrapper'
-export { THREE }
+import { REVISION } from '@enable3d/three-wrapper'
 
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}
 
@@ -45,7 +43,7 @@ class AmmoPhysics extends EventEmitter {
   constructor(public scene: Scene, public config: Phaser3DConfig = {}) {
     super()
 
-    const version = `three.js version ${THREE.REVISION}`
+    const version = `three.js version ${REVISION}`
     console.log(
       `%c %c %c %c %c ${version} %c https://threejs.org/`,
       'background: #ff0000',

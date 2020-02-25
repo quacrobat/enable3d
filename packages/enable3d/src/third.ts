@@ -4,7 +4,7 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import ThreeGraphics from '@enable3d/three-graphics/src/index'
+import { ThreeGraphics } from '@enable3d/three-graphics/src/index'
 import { Phaser3DConfig } from '@enable3d/common/src/types'
 import { Scene3D } from '.'
 import { WebGLRenderer, Object3D } from '@enable3d/three-wrapper'
@@ -31,6 +31,9 @@ class Third extends ThreeGraphics {
     })
 
     super(config)
+
+    //  We don't want three.js to wipe our gl context!
+    this.renderer.autoClear = false
 
     this.scene3D = scene3D
 

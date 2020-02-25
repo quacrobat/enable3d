@@ -7,7 +7,7 @@ module.exports = (env, argv) => {
   return {
     mode: 'production',
     devtool: 'source-map',
-    entry: path.resolve(__dirname, '../packages/ammoPhysics/src/index.ts'),
+    entry: path.resolve(__dirname, '../packages/ammoPhysics/src/bundle.ts'),
     output: {
       filename: `enable3d.ammoPhysics@${argv.packageVersion}.min.js`,
       path: path.resolve(__dirname, `${argv.path}`),

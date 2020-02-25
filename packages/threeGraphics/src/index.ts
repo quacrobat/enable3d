@@ -153,9 +153,6 @@ class ThreeGraphics {
     // no implemented yet
     this.composer = null
 
-    //  We don't want three.js to wipe our gl context!
-    this.renderer.autoClear = false
-
     // add vr camera
     if (enableXR) {
       // the xr renderer is always window.innerWidth and window.innerHeight
@@ -523,4 +520,4 @@ class ThreeGraphics {
 
 applyMixins(ThreeGraphics, [Loaders, Cameras, Textures, Lights, CSG, WebXR, HeightMap, Transform])
 
-export default ThreeGraphics
+export { ThreeGraphics }
