@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "tsc": "tsc",
     "build": "tsc",
     "bundle": "webpack --config ../../webpack/webpack.ammo.js --packageVersion=${npm_package_version}"
   },

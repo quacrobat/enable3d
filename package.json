@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
+    "tsc": "lerna run tsc",
     "start": "npm-run-all --parallel start:*",
     "start:enable3d": "cd packages/enable3d && tsc --watch",
     "start:ammo": "cd packages/ammo && tsc --watch",
