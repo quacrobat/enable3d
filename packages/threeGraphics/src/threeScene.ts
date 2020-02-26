@@ -6,36 +6,43 @@
 
 import { ThreeGraphics } from './index'
 import { Clock } from '@enable3d/three-wrapper/src/index'
+import { Phaser3DConfig } from '@enable3d/common/src/types'
 
-class Scene3D extends ThreeGraphics {
+class ThreeScene extends ThreeGraphics {
   clock: Clock
-  init: () => void
-  preload: () => void
-  create: () => void
-  update: (time: number, delta: number) => void
 
-  constructor(config = {}) {
+  constructor(config: Phaser3DConfig = {}) {
     super(config)
     this._init()
-    this._preload()
-    this._create()
-    this._update()
   }
 
-  private _init() {
+  public init() {}
+  public preload() {}
+  public create() {}
+  public update(_time: number, _delta: number) {}
+
+  private async _init() {
     this.clock = new Clock()
+
     this.renderer.setSize(window.innerWidth, window.innerHeight)
-    document.body.appendChild(this.renderer.domElement)
-    this.init()
-  }
 
-  private _preload() {
-    this.preload()
-  }
+    const div = document.createElement('div')
+    div.id = 'three-scene'
+    document.body.appendChild(div)
+    document.getElementById('three-scene')?.appendChild(this.renderer.domElement)
 
-  private _create() {
-    this.create()
+    await this.init?.()
+    await this._preload()
+    await this._create()
     this._update()
+  }
+
+  private async _preload() {
+    await this.preload?.()
+  }
+
+  private async _create() {
+    await this.create?.()
   }
 
   private _update() {
@@ -44,9 +51,11 @@ class Scene3D extends ThreeGraphics {
     const time = this.clock.getElapsedTime()
     const delta = this.clock.getDelta()
 
-    this.update(time, delta)
+    this.update?.(time, delta)
 
     this.physics?.update?.(delta * 1000)
     this.renderer.render(this.scene, this.camera)
   }
 }
+
+export { ThreeScene }
