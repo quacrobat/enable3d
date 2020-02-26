@@ -65,7 +65,7 @@ import {
   SphereBufferGeometry,
   MeshBasicMaterial,
   RepeatWrapping
-} from '@enable3d/three-wrapper'
+} from '@enable3d/three-wrapper/src/index'
 
 import {
   BoxConfig,

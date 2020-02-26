@@ -18,7 +18,7 @@ import {
   VertexColors,
   LineSegments,
   StaticDrawUsage
-} from '@enable3d/three-wrapper'
+} from '@enable3d/three-wrapper/src/index'
 
 const AmmoDebugConstants = {
   NoDebug: 0,

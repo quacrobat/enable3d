@@ -6,7 +6,7 @@
 
 import { AmmoPhysics } from '.'
 import { ExtendedObject3D } from '@enable3d/common/src/types'
-import { Euler, Quaternion } from '@enable3d/three-wrapper'
+import { Euler, Quaternion } from '@enable3d/three-wrapper/src/index'
 import logger from '@enable3d/common/src/logger'
 
 class PhysicsBody {

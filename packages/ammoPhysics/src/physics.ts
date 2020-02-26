@@ -7,7 +7,7 @@
 import DebugDrawer from './debugDrawer'
 import EventEmitter from 'eventemitter3'
 import { ExtendedObject3D, Phaser3DConfig } from '@enable3d/common/src/types'
-import { Vector3, MeshLambertMaterial, Scene } from '@enable3d/three-wrapper'
+import { Vector3, MeshLambertMaterial, Scene } from '@enable3d/three-wrapper/src/index'
 import { ConvexObjectBreaker } from './convexObjectBreaker'
 
 class Physics extends EventEmitter {

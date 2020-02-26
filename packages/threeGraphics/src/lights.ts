@@ -4,7 +4,7 @@
  * @license      {@link https://github.com/yandeu/enable3d/blob/master/LICENSE|GNU GPLv3}
  */
 
-import { DirectionalLight, HemisphereLight, Scene, AmbientLight, PointLight } from '@enable3d/three-wrapper'
+import { DirectionalLight, HemisphereLight, Scene, AmbientLight, PointLight } from '@enable3d/three-wrapper/src/index'
 
 export default class Lights {
   public scene: Scene

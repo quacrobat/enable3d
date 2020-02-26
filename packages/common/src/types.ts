@@ -21,14 +21,23 @@ import {
   MeshPhysicalMaterialParameters,
   Material,
   WebGLRenderer
-} from '@enable3d/three-wrapper'
+} from '@enable3d/three-wrapper/src/index'
 import ExtendedObject3D from './extendedObject3D'
 
 export { ExtendedObject3D }
-export { AnimationAction } from '@enable3d/three-wrapper'
+export { AnimationAction } from '@enable3d/three-wrapper/src/index'
 // TODO fix this export
 // export { ThirdPersonControls } from '../misc/thirdPersonControls'
-export { AnimationMixer, AnimationClip, Object3D, Mesh, Material, Line, Points, Group } from '@enable3d/three-wrapper'
+export {
+  AnimationMixer,
+  AnimationClip,
+  Object3D,
+  Mesh,
+  Material,
+  Line,
+  Points,
+  Group
+} from '@enable3d/three-wrapper/src/index'
 
 export interface Phaser3DConfig {
   anisotropy?: number

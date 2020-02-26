@@ -41,7 +41,7 @@ import {
   MeshToonMaterial,
   TorusGeometry,
   TorusBufferGeometry
-} from '@enable3d/three-wrapper'
+} from '@enable3d/three-wrapper/src/index'
 import ExtendedObject3D from './extendedObject3D'
 import ExtendedMesh from './extendedMesh'
 import logger from './logger'

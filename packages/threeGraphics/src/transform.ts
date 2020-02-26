@@ -7,7 +7,7 @@ import {
   WebGLRenderer,
   PerspectiveCamera,
   OrthographicCamera
-} from '@enable3d/three-wrapper'
+} from '@enable3d/three-wrapper/src/index'
 import { SVGLoader } from '@enable3d/three-wrapper/src/examples'
 
 /**

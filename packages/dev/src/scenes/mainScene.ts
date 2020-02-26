@@ -1,4 +1,4 @@
-import { Object3D, Scene3D, ExtendedObject3D } from 'enable3d'
+import { Object3D, Scene3D, ExtendedObject3D } from '../../../phaser/src/index'
 
 export default class MainScene extends Scene3D {
   sphere: Object3D

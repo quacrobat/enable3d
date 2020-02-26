@@ -33,7 +33,7 @@
  *
  */
 
-import { Line3, Mesh, Plane, Vector3 } from '@enable3d/three-wrapper'
+import { Line3, Mesh, Plane, Vector3 } from '@enable3d/three-wrapper/src/index'
 import { ConvexBufferGeometry } from '@enable3d/three-wrapper/src/examples'
 import logger from '@enable3d/common/src/logger'
 

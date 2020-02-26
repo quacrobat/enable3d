@@ -1,5 +1,12 @@
 import { Water } from '@enable3d/three-wrapper/src/examples'
-import { PlaneBufferGeometry, Scene, Vector2, Mesh, MeshStandardMaterial, TextureLoader } from '@enable3d/three-wrapper'
+import {
+  PlaneBufferGeometry,
+  Scene,
+  Vector2,
+  Mesh,
+  MeshStandardMaterial,
+  TextureLoader
+} from '@enable3d/three-wrapper/src/index'
 
 // from this example:
 // https://threejs.org/examples/?q=water#webgl_water
