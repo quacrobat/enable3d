@@ -12,7 +12,7 @@
   "author": "Yannick Deubel",
   "license": "GNU GPLv3",
   "dependencies": {
-    "@enable3d/phaser": "^0.0.14",
+    "@enable3d/phaser-extension": "^0.0.14",
     "phaser": "^3.21.0"
   },
   "devDependencies": {
