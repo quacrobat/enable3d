@@ -20,7 +20,7 @@
     "build": "npm-run-all build:*",
     "build:enable3d": "cd packages/phaserExtension && tsc",
     "build:dev": "cd packages/dev && npm run build",
-    "postinstall": "lerna bootstrap --no-ci",
+    "postinstall": "lerna bootstrap --no-ci && lerna run tsc",
     "lerna-version": "lerna version --no-commit-hooks --no-git-tag-version && npm run bundle",
     "publish": "cd packages/phaserExtension/ && npm publish"
   },
