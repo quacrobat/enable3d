@@ -9,8 +9,8 @@ import { Clock } from '@enable3d/three-wrapper/src/index'
 import { Phaser3DConfig } from '@enable3d/common/src/types'
 
 class ThreeScene extends ThreeGraphics {
-  clock: Clock
-  then: number = 0
+  private then: number = 0
+  public clock: Clock
 
   constructor(config: Phaser3DConfig = {}) {
     super(config)
