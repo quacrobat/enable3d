@@ -3,7 +3,7 @@ import Phaser from 'phaser'
 import PreloadScene from './scenes/preloadScene'
 import enable3d, { Canvas } from '@enable3d/phaser-extension'
 
-import { ThreeScene } from '@enable3d/phaser-extension/node_modules/@enable3d/three-graphics'
+import { ThreeScene, PhysicsLoader } from '@enable3d/phaser-extension/node_modules/@enable3d/three-graphics'
 
 // const config: Phaser.Types.Core.GameConfig = {
 //   type: Phaser.WEBGL,
@@ -31,10 +31,12 @@ class MainScene extends ThreeScene {
     console.log('create')
     this.warpSpeed()
     this.add.box({ y: 0.5 })
+    this.physics.add.box({ y: 10 })
+    this.physics.debug.enable()
   }
 
   update() {
-    console.log('update')
+    // console.log('update')
   }
 }
-new MainScene()
+PhysicsLoader('/lib', () => new MainScene())

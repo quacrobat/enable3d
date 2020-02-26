@@ -10,6 +10,7 @@ import { Phaser3DConfig } from '@enable3d/common/src/types'
 
 class ThreeScene extends ThreeGraphics {
   clock: Clock
+  then: number = 0
 
   constructor(config: Phaser3DConfig = {}) {
     super(config)
@@ -34,7 +35,7 @@ class ThreeScene extends ThreeGraphics {
     await this.init?.()
     await this._preload()
     await this._create()
-    this._update()
+    requestAnimationFrame(this._update.bind(this))
   }
 
   private async _preload() {
@@ -45,16 +46,19 @@ class ThreeScene extends ThreeGraphics {
     await this.create?.()
   }
 
-  private _update() {
-    requestAnimationFrame(this._update.bind(this))
-
+  private _update(now: number) {
+    // update time and delta
+    now *= 0.001 // make it seconds
+    const delta = now - this.then
+    this.then = now
     const time = this.clock.getElapsedTime()
-    const delta = this.clock.getDelta()
 
     this.update?.(time, delta)
-
-    this.physics?.update?.(delta * 1000)
+    this.physics.update(delta * 1000)
+    this.physics.updateDebugger()
     this.renderer.render(this.scene, this.camera)
+
+    requestAnimationFrame(this._update.bind(this))
   }
 }
 
