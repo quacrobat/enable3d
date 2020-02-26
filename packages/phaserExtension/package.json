@@ -7,7 +7,7 @@
   "license": "GNU GPLv3",
   "scripts": {
     "tsc": "tsc",
-    "bundle": "webpack --config ../../webpack/webpack.enable3d.js --path=../bundles --packageVersion=${npm_package_version}",
+    "bundle": "webpack --config ../../webpack/webpack.phaserExtension.js --path=../bundles --packageVersion=${npm_package_version}",
     "build": "tsc --build tsconfig.json",
     "prepublishOnly": "npm run build"
   },
