@@ -1,4 +1,4 @@
-import { Object3D, Scene3D, ExtendedObject3D } from '../../../phaser/src/index'
+import { Object3D, Scene3D, ExtendedObject3D } from '@enable3d/phaser'
 
 export default class MainScene extends Scene3D {
   sphere: Object3D
@@ -26,7 +26,7 @@ export default class MainScene extends Scene3D {
     this.third.haveSomeFun(50)
   }
 
-  update(delta, time) {
+  update(delta: number, time: number) {
     this.third.physics.update(delta)
     this.third.physics.updateDebugger()
   }
