@@ -25,5 +25,5 @@
     "allowJs": true
   },
   "include": ["./src/**/*", "./types/**/*"],
-  "exclude": ["**/*.spec.ts"]
+  "exclude": ["./node_modules/*", "**/node_modules/*", "**/dist/*", "**/*.spec.ts"]
 }

@@ -14,15 +14,15 @@
     "prune-node-modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "prune-dist": "find . -name 'dist' -type d -prune -exec rm -rf '{}' +",
     "bundle": "npm-run-all bundle:*",
-    "bundle:enable3d": "cd packages/enable3d && npm run build && npm run bundle",
+    "bundle:enable3d": "cd packages/phaser && npm run build && npm run bundle",
     "bundle:ammoPhysics": "cd packages/ammoPhysics && npm run build && npm run bundle",
     "bundle:threeGraphics": "cd packages/threeGraphics && npm run build && npm run bundle",
     "build": "npm-run-all build:*",
-    "build:enable3d": "cd packages/enable3d && tsc",
+    "build:enable3d": "cd packages/phaser && tsc",
     "build:dev": "cd packages/dev && npm run build",
     "postinstall": "lerna bootstrap --no-ci",
     "lerna-version": "lerna version --no-commit-hooks --no-git-tag-version && npm run bundle",
-    "publish": "cd packages/enable3d/ && npm publish"
+    "publish": "cd packages/phaser/ && npm publish"
   },
   "repository": {
     "type": "git",
