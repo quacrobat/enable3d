@@ -30,6 +30,9 @@ import { addTorusShape } from './torusShape'
 import Factories from '@enable3d/common/src/factories'
 import { REVISION } from '@enable3d/three-wrapper/src/index'
 
+import { PhysicsLoader } from '@enable3d/common/src/physicsLoader'
+export { PhysicsLoader }
+
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}
 
 class AmmoPhysics extends EventEmitter {

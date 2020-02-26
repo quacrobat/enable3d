@@ -1,4 +1,4 @@
-import loadAmmoModule from '@enable3d/common/src/wasmLoader'
+import loadAmmoModule from './wasmLoader'
 
 const PhysicsLoader = (path: string, callback: Function) => {
   window.__loadPhysics = true
