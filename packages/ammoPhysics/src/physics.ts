@@ -7,8 +7,9 @@
 import DebugDrawer from './debugDrawer'
 import EventEmitter from 'eventemitter3'
 import { ExtendedObject3D, Phaser3DConfig } from '@enable3d/common/src/types'
-import { Vector3, MeshLambertMaterial, Scene, Quaternion, Euler } from '@enable3d/three-wrapper/src/index'
+import { Vector3, Scene, Quaternion, Euler } from '@enable3d/three-wrapper/src/index'
 import { ConvexObjectBreaker } from './convexObjectBreaker'
+import DefaultMaterial from '@enable3d/common/src/defaultMaterial'
 
 class Physics extends EventEmitter {
   public tmpTrans: Ammo.btTransform
@@ -33,6 +34,8 @@ class Physics extends EventEmitter {
   protected tmpVector3: Vector3
   protected tmpBtVector3: Ammo.btVector3
   protected tmpBtQuaternion: Ammo.btQuaternion
+
+  protected defaultMaterial: DefaultMaterial
 
   constructor(protected scene: Scene, public config: Phaser3DConfig = {}) {
     super()
@@ -90,7 +93,7 @@ class Physics extends EventEmitter {
   }
 
   private createDebrisFromBreakableObject(object: ExtendedObject3D, parent: ExtendedObject3D) {
-    object.material = new MeshLambertMaterial({ color: 0xcccccc })
+    object.material = this.defaultMaterial.get()
     object.shape = 'hull'
     object.fragmentDepth = parent.fragmentDepth + 1
 

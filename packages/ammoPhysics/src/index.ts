@@ -32,6 +32,7 @@ import { REVISION } from '@enable3d/three-wrapper/src/index'
 
 import { PhysicsLoader } from '@enable3d/common/src/physicsLoader'
 import ExtendedMesh from '@enable3d/common/src/extendedMesh'
+import DefaultMaterial from '@enable3d/common/src/defaultMaterial'
 export { PhysicsLoader }
 
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}
@@ -50,6 +51,8 @@ class AmmoPhysics extends EventEmitter {
   protected tmpBtVector3: Ammo.btVector3
   protected tmpBtQuaternion: Ammo.btQuaternion
 
+  protected defaultMaterial: DefaultMaterial
+
   constructor(public scene: Scene, public config: Phaser3DConfig = {}) {
     super()
 
@@ -58,6 +61,8 @@ class AmmoPhysics extends EventEmitter {
     this.tmpVector3 = new Vector3()
     this.tmpBtVector3 = new Ammo.btVector3()
     this.tmpBtQuaternion = new Ammo.btQuaternion(0, 0, 0, 1)
+
+    this.defaultMaterial = new DefaultMaterial()
 
     const version = `three.js version ${REVISION}`
     console.log(
