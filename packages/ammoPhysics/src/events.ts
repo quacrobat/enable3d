@@ -11,7 +11,6 @@ export default class Events extends EventEmitter {
   public tmpTrans: Ammo.btTransform
   public physicsWorld: Ammo.btDiscreteDynamicsWorld
 
-  // TODO this is not finished yet
   protected addCollider(
     object1: ExtendedObject3D,
     object2: ExtendedObject3D,

@@ -124,7 +124,7 @@ class ThreeGraphics {
       anisotropy = 1,
       enableXR = false,
       camera = Cameras.PerspectiveCamera({ z: 25, y: 5 }),
-      renderer = new WebGLRenderer()
+      renderer = new WebGLRenderer({ antialias: true })
     } = config
 
     this.textureAnisotropy = anisotropy
@@ -220,8 +220,16 @@ class ThreeGraphics {
   public get load() {
     return {
       texture: (url: string) => this.loadTexture(url),
-      gltf: (key: string, cb: Function) => this.loadGLTF(key, cb),
-      fbx: (path: string, cb: (object: any) => void) => this.loadFBX(path, cb)
+      gltf: (url: string, cb: Function) => this.loadGLTF(url, cb),
+      fbx: (path: string, cb: (object: any) => void) => this.loadFBX(path, cb),
+      async: this.loadAsync
+    }
+  }
+
+  private get loadAsync() {
+    return {
+      texture: (url: string) => this.loadTextureAsync(url),
+      gltf: (url: string) => this.loadGLTFAsync(url)
     }
   }
 
@@ -229,10 +237,10 @@ class ThreeGraphics {
     return {
       /** Load a texture using the three.js texture loader. */
       load: (url: string) => this.loadTexture(url),
-      /** Get the texture by its Key. */
-      get: (key: string) => this._getTexture(key),
+      // /** Get the texture by its Key. */
+      // get: (key: string) => this._getTexture(key),
       /** Add the textures in the order Left, Right, Top, Bottom, Front, Back. */
-      cube: (textures: string[]) => this.textureCube(textures)
+      cube: (textures: Texture[]) => this.textureCube(textures)
     }
   }
 
@@ -335,7 +343,6 @@ class ThreeGraphics {
     return new OrbitControls(camera, parent)
   }
 
-  // Todo: Add something awesome here
   public haveSomeFun(numberOfElements: number = 20) {
     if (!window.__loadPhysics) {
       logger('There is not much fun without physics enabled!')

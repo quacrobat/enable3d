@@ -10,11 +10,22 @@ import { FBXLoader } from '@enable3d/three-wrapper/src/examples'
 export default class Loaders {
   constructor() {}
 
-  protected loadGLTF(_key: string, _cb: Function) {
-    console.log('temporarily disabled')
-    // const loader = new GLTFLoader()
-    // const data = this.root.cache.binary.get(key)
-    // loader.parse(data, '', object => cb(object))
+  // protected loadGLTF(_key: string, _cb: Function) {
+  //   const loader = new GLTFLoader()
+  //   const data = this.root.cache.binary.get(key)
+  //   loader.parse(data, '', object => cb(object))
+  // }
+
+  protected loadGLTF(url: string, onLoad: Function) {
+    const loader = new GLTFLoader()
+    loader.load(url, (gltf: any) => onLoad(gltf))
+  }
+
+  protected loadGLTFAsync(url: string) {
+    return new Promise(resolve => {
+      const loader = new GLTFLoader()
+      loader.load(url, (gltf: any) => resolve(gltf))
+    })
   }
 
   protected loadFBX(path: string, cb: (object: any) => void) {

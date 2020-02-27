@@ -33,46 +33,23 @@ export default class Textures {
   protected add: any
   protected textureAnisotropy: number
 
-  constructor() {}
+  // loading from phaser cache would be like:
+  // texture.image = this.root.textures.get(key).getSourceImage()
 
-  /** Use third.texture.get(KEY) instead. */
-  public getTexture(key: string) {
-    logger(`[Texture ${key}] getTexture() is deprecated. Use third.texture.get(${key}) instead.`)
-  }
-
-  protected _getTexture(_key: string) {
-    // TODO fix this
-    console.log('sorry _getTexture() is currently disabled')
-    /*const texture = new Texture()
-
-    texture.image = this.root.textures.get(key).getSourceImage()
-
-    texture.format = RGBAFormat
-    texture.needsUpdate = true
-    texture.anisotropy = this.textureAnisotropy
-    // texture.encoding = sRGBEncoding
-
-    return texture*/
-  }
-
-  protected textureCube(textures: string[]) {
-    // TODO fix this
-    console.log('sorry textureCube() is currently disabled')
-
+  protected textureCube(textures: Texture[]) {
     if (textures.length !== 6) {
-      logger('You need to pass 6 textures to textureCube()')
+      logger('You need to pass 6 urls to textureCube()')
     }
 
-    /* const textureCube = new TextureCube()
+    const textureCube = new TextureCube()
 
-    textures.forEach((key, i) => {
-      const texture = this._getTexture(key)
+    textures.forEach((texture, i) => {
       texture.wrapS = texture.wrapT = RepeatWrapping
       const material: Material = this.add.material({ phong: { map: texture } })
       textureCube.materials[i] = material
     })
 
-    return textureCube*/
+    return textureCube
   }
 
   protected loadTexture(url: string): Texture {
@@ -84,5 +61,19 @@ export default class Textures {
     // texture.offset.set(0, 0)
     // texture.repeat.set(10, 10)
     return texture
+  }
+
+  protected loadTextureAsync(url: string) {
+    return new Promise(resolve => {
+      const loader = new TextureLoader()
+      loader.load(url, texture => {
+        texture.anisotropy = this.textureAnisotropy
+        // example to repeat a texture
+        // texture.wrapS = texture.wrapT = RepeatWrapping
+        // texture.offset.set(0, 0)
+        // texture.repeat.set(10, 10)
+        resolve(texture)
+      })
+    })
   }
 }
