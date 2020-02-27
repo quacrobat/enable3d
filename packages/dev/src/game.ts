@@ -81,11 +81,9 @@ class MainScene extends ThreeScene {
   }
 
   update() {
-    // this is how you update a kinematic body
-    this.box.body.transform()
-    const rot = this.box.body.getRotation()
-    this.box.body.setRotation(rot.x + 0.01, rot.y, rot.z)
-    this.box.body.refresh()
+    // this works only on kinematic objects
+    this.box.rotation.x += 0.01
+    this.box.rotation.y += 0.01
   }
 }
 PhysicsLoader('/lib', () => new MainScene())

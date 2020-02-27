@@ -7,7 +7,7 @@
 import DebugDrawer from './debugDrawer'
 import EventEmitter from 'eventemitter3'
 import { ExtendedObject3D, Phaser3DConfig } from '@enable3d/common/src/types'
-import { Vector3, MeshLambertMaterial, Scene } from '@enable3d/three-wrapper/src/index'
+import { Vector3, MeshLambertMaterial, Scene, Quaternion, Euler } from '@enable3d/three-wrapper/src/index'
 import { ConvexObjectBreaker } from './convexObjectBreaker'
 
 class Physics extends EventEmitter {
@@ -27,6 +27,12 @@ class Physics extends EventEmitter {
   protected emptyV3: Vector3
   protected impactPoint: Vector3
   protected impactNormal: Vector3
+
+  protected tmpEuler: Euler
+  protected tmpQuaternion: Quaternion
+  protected tmpVector3: Vector3
+  protected tmpBtVector3: Ammo.btVector3
+  protected tmpBtQuaternion: Ammo.btQuaternion
 
   constructor(protected scene: Scene, public config: Phaser3DConfig = {}) {
     super()
@@ -129,12 +135,31 @@ class Physics extends EventEmitter {
 
       if (ms) {
         ms.getWorldTransform(this.tmpTrans)
-        var p = this.tmpTrans.getOrigin()
-        var q = this.tmpTrans.getRotation()
-        // body offset
-        let o = objThree.body.offset
-        objThree.position.set(p.x() + o.x, p.y() + o.y, p.z() + o.z)
-        objThree.quaternion.set(q.x(), q.y(), q.z(), q.w())
+        if (objThree.body.ammo.isKinematicObject()) {
+          // get position and rotation
+          objThree.getWorldQuaternion(this.tmpQuaternion)
+          objThree.getWorldPosition(this.tmpVector3)
+          // adjust tmp variables
+          this.tmpBtVector3.setValue(this.tmpVector3.x, this.tmpVector3.y, this.tmpVector3.z)
+          this.tmpBtQuaternion.setValue(
+            this.tmpQuaternion.x,
+            this.tmpQuaternion.y,
+            this.tmpQuaternion.z,
+            this.tmpQuaternion.w
+          )
+          // set position and rotation
+          this.tmpTrans.setOrigin(this.tmpBtVector3)
+          this.tmpTrans.setRotation(this.tmpBtQuaternion)
+          // set transform
+          ms.setWorldTransform(this.tmpTrans)
+        } else {
+          let p = this.tmpTrans.getOrigin()
+          let q = this.tmpTrans.getRotation()
+          // body offset
+          let o = objThree.body.offset
+          objThree.position.set(p.x() + o.x, p.y() + o.y, p.z() + o.z)
+          objThree.quaternion.set(q.x(), q.y(), q.z(), q.w())
+        }
 
         objThree.body.collided = false
       }

@@ -24,7 +24,7 @@ import Constraints from './constraints'
 import Events from './events'
 import EventEmitter from 'eventemitter3'
 import Physics from './physics'
-import { Vector3, Quaternion, Scene, Mesh } from '@enable3d/three-wrapper/src/index'
+import { Vector3, Quaternion, Scene, Mesh, Euler } from '@enable3d/three-wrapper/src/index'
 import { createCollisionShapes } from './three-to-ammo'
 import { addTorusShape } from './torusShape'
 import Factories from '@enable3d/common/src/factories'
@@ -44,8 +44,20 @@ class AmmoPhysics extends EventEmitter {
   protected gravity: { x: number; y: number; z: number }
   protected factory: Factories
 
+  protected tmpEuler: Euler
+  protected tmpQuaternion: Quaternion
+  protected tmpVector3: Vector3
+  protected tmpBtVector3: Ammo.btVector3
+  protected tmpBtQuaternion: Ammo.btQuaternion
+
   constructor(public scene: Scene, public config: Phaser3DConfig = {}) {
     super()
+
+    this.tmpEuler = new Euler()
+    this.tmpQuaternion = new Quaternion()
+    this.tmpVector3 = new Vector3()
+    this.tmpBtVector3 = new Ammo.btVector3()
+    this.tmpBtQuaternion = new Ammo.btQuaternion(0, 0, 0, 1)
 
     const version = `three.js version ${REVISION}`
     console.log(
