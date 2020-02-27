@@ -199,4 +199,5 @@ export interface AddExistingConfig {
   autoCenter?: boolean
   offset?: { x?: number; y?: number; z?: number }
   breakable?: boolean
+  addRigidBody?: boolean
 }

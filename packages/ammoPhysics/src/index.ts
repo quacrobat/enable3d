@@ -119,9 +119,36 @@ class AmmoPhysics extends EventEmitter {
     }
   }
 
-  protected addExisting(object: ExtendedObject3D, config: AddExistingConfig = {}): void {
+  public addCompoundShape(shapes: any) {
+    const compoundShape = new Ammo.btCompoundShape()
+    shapes.forEach((obj: any, i: number) => {
+      const transform = new Ammo.btTransform()
+
+      const pos = new Vector3(obj.x || 0, obj.y || 0, obj.z || 0)
+      if (obj.tmp?.offset) {
+        const o = obj.tmp.offset
+        pos.add(new Vector3(o.x, o.y, o.z))
+      }
+      transform.setIdentity()
+      transform.setOrigin(new Ammo.btVector3(pos.x || 0, pos.y || 0, pos.z || 0))
+      // TODO add rotation
+      // transform.setRotation(new Ammo.btQuaternion(quat.x || 0, quat.y || 0, quat.z || 0, quat.w || 1))
+      compoundShape.addChildShape(transform, shapes[i])
+    })
+    return compoundShape
+  }
+
+  protected addExisting(object: ExtendedObject3D, config: AddExistingConfig = {}): any {
     const { position: pos, quaternion: quat, hasBody } = object
-    const { mass = 1, autoCenter = false, offset = undefined, shapes = [], breakable = false } = config
+
+    const {
+      mass = 1,
+      autoCenter = false,
+      offset = undefined,
+      shapes = [],
+      breakable = false,
+      addRigidBody = true
+    } = config
 
     const defaultParams = {
       width: 1,
@@ -132,6 +159,16 @@ class AmmoPhysics extends EventEmitter {
       radiusBottom: 1, // for the cylinder
       tube: 0.4, // for the torus
       tubularSegments: 6 // for the torus
+    }
+
+    // check if the object has children
+    const children: any[] = []
+    if (object.children.length >= 1) {
+      object.children.forEach((child: any) => {
+        const shape = this.addExisting(child, { addRigidBody: false })
+        shape.tmp = { offset: child.position.clone() }
+        children.push(shape)
+      })
     }
 
     let shape = 'box'
@@ -180,29 +217,17 @@ class AmmoPhysics extends EventEmitter {
     if (shape === 'mesh' || shape === 'convex') shape = 'convexMesh'
     if (shape === 'concave') shape = 'concaveMesh'
 
-    let Shape
+    let Shape: any
 
     // combine multiple shapes to one compound shape
     if (shapes.length > 0) {
       const tmp: any[] = [] // stores all the raw shapes
-      const compoundShape = new Ammo.btCompoundShape()
 
       shapes.forEach(obj => {
         tmp.push(this.addShape({ shape: obj.shape, params: { ...obj } }))
       })
 
-      shapes.forEach((obj, i) => {
-        const transform = new Ammo.btTransform()
-        // @ts-ignore
-        const pos = { x: obj.x || 0, y: obj.y || 0, z: obj.z || 0 }
-        transform.setIdentity()
-        transform.setOrigin(new Ammo.btVector3(pos.x || 0, pos.y || 0, pos.z || 0))
-        // TODO add rotation
-        // transform.setRotation(new Ammo.btQuaternion(quat.x || 0, quat.y || 0, quat.z || 0, quat.w || 1))
-        compoundShape.addChildShape(transform, tmp[i])
-      })
-
-      Shape = compoundShape
+      Shape = this.addCompoundShape(tmp)
     } else {
       Shape = this.addShape({ shape, shapes, params, object, quat })
     }
@@ -214,6 +239,24 @@ class AmmoPhysics extends EventEmitter {
 
     Shape.setMargin(0.05)
 
+    if (children.length >= 1) {
+      Shape = this.addCompoundShape([Shape, ...children])
+    }
+
+    if (!addRigidBody) return Shape
+
+    this.addRigidBodyToShape(object, Shape, { mass, pos, quat, breakable, offset, config })
+  }
+
+  public addRigidBodyToShape(object: any, Shape: any, options: any) {
+    const {
+      mass = 1,
+      pos = new Vector3(0, 0, 0),
+      quat = new Quaternion(0, 0, 0, 1),
+      breakable = false,
+      offset = { x: 0, y: 0, z: 0 },
+      config = {}
+    } = options
     this.addRigidBody(object, Shape, mass, pos, quat)
     this.addBodyProperties(object, config)
 
