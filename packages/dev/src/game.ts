@@ -84,6 +84,7 @@ class MainScene extends ThreeScene {
     // this works only on kinematic objects
     this.box.rotation.x += 0.01
     this.box.rotation.y += 0.01
+    this.box.body.needUpdate = true
   }
 }
 PhysicsLoader('/lib', () => new MainScene())

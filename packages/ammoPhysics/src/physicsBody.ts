@@ -16,6 +16,7 @@ class PhysicsBody {
   public checkCollisions = false
   public breakable = false
   public collided = false
+  public needUpdate = false
 
   // private tmpEuler = new Euler()
   // private tmpQuaternion = new Quaternion()

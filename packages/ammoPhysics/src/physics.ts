@@ -135,7 +135,7 @@ class Physics extends EventEmitter {
 
       if (ms) {
         ms.getWorldTransform(this.tmpTrans)
-        if (objThree.body.ammo.isKinematicObject()) {
+        if (objThree.body.ammo.isKinematicObject() && objThree.body.needUpdate) {
           // get position and rotation
           objThree.getWorldQuaternion(this.tmpQuaternion)
           objThree.getWorldPosition(this.tmpVector3)
@@ -152,6 +152,8 @@ class Physics extends EventEmitter {
           this.tmpTrans.setRotation(this.tmpBtQuaternion)
           // set transform
           ms.setWorldTransform(this.tmpTrans)
+          // reset needsUpdate
+          objThree.body.needUpdate = false
         } else {
           let p = this.tmpTrans.getOrigin()
           let q = this.tmpTrans.getRotation()
