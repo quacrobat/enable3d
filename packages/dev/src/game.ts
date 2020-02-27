@@ -48,14 +48,6 @@ class MainScene extends ThreeScene {
     // collisionFlags 2 means this will be a kinematic body
     this.box = this.physics.add.box({ y: 2, collisionFlags: 2 })
 
-    // merge children to compound shape
-    const body = this.add.box({ z: 5, height: 0.8, y: 1, width: 0.4, depth: 0.4 }, { lambert: { color: 0xffff00 } })
-    const head = this.add.sphere({ z: 0, radius: 0.25, y: -0.8 }, { lambert: { color: 0xffff00 } })
-    body.add(head)
-    body.position.set(5, 5, 5)
-    body.rotation.set(0, 0.4, 0.2)
-    this.physics.add.existing(body)
-
     this.physics.add.box({ y: 10 })
     this.physics.debug.enable()
 
@@ -78,6 +70,14 @@ class MainScene extends ThreeScene {
     cube.position.set(0, 10, 0)
     this.scene.add(cube)
     this.physics.add.existing(cube)
+
+    // merge children to compound shape
+    const body = this.add.box({ z: 5, height: 0.8, y: 1, width: 0.4, depth: 0.4 }, { lambert: { color: 0xffff00 } })
+    const head = this.add.sphere({ z: 0, radius: 0.25, y: -0.8 }, { lambert: { color: 0xffff00 } })
+    body.add(head, cube.clone())
+    body.position.set(5, 5, 5)
+    body.rotation.set(0, 0.4, 0.2)
+    this.physics.add.existing(body)
   }
 
   update() {
