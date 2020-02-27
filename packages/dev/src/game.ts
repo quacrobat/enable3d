@@ -48,7 +48,8 @@ class MainScene extends ThreeScene {
     // collisionFlags 2 means this will be a kinematic body
     this.box = this.physics.add.box({ y: 2, collisionFlags: 2 })
 
-    this.physics.add.box({ y: 10 })
+    let box2 = this.physics.add.box({ y: 10 })
+
     this.physics.debug.enable()
 
     // texture cube
@@ -65,7 +66,7 @@ class MainScene extends ThreeScene {
 
     // green sphere
     const geometry = new THREE.SphereBufferGeometry()
-    const material = new THREE.MeshLambertMaterial({ color: 0x00ff00 })
+    const material = new THREE.MeshLambertMaterial({ color: 0xff00ff })
     const cube = new THREE.Mesh(geometry, material) as any
     cube.position.set(0, 10, 0)
     this.scene.add(cube)
@@ -78,6 +79,21 @@ class MainScene extends ThreeScene {
     body.position.set(5, 5, 5)
     body.rotation.set(0, 0.4, 0.2)
     this.physics.add.existing(body)
+
+    // this is how you once change position/rotation of a dynamic body
+    const updateDynamicBody = () => {
+      const collisionFlags = box2.body.getCollisionFlags()
+      box2.body.setCollisionFlags(2)
+      box2.position.set(0, 10, 0)
+      box2.body.needUpdate = true
+      box2.body.once.update(() => {
+        box2.body.setVelocity(0, 0, 0)
+        box2.body.setAngularVelocity(0, 0, 0)
+        box2.body.setCollisionFlags(collisionFlags)
+      })
+    }
+    window.setTimeout(() => updateDynamicBody(), 4000)
+    window.setTimeout(() => updateDynamicBody(), 8000)
   }
 
   update() {

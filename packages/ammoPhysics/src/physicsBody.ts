@@ -6,8 +6,8 @@
 
 import { AmmoPhysics } from '.'
 import { ExtendedObject3D } from '@enable3d/common/src/types'
-import { Euler, Quaternion } from '@enable3d/three-wrapper/src/index'
-import logger from '@enable3d/common/src/logger'
+
+import EventEmitter from 'eventemitter3'
 
 class PhysicsBody {
   public offset = { x: 0, y: 0, z: 0 }
@@ -16,29 +16,54 @@ class PhysicsBody {
   public checkCollisions = false
   public breakable = false
   public collided = false
-  public needUpdate = false
+  public didUpdate = false
 
-  // private tmpEuler = new Euler()
-  // private tmpQuaternion = new Quaternion()
+  private _emitUpdateEvents = false
+  private _needUpdate = false
   private tmpBtVector3 = new Ammo.btVector3()
-  // private tmpBtQuaternion = new Ammo.btQuaternion(0, 0, 0, 1)
+  private eventEmitter: EventEmitter
 
   constructor(private physics: AmmoPhysics, public ammo: Ammo.btRigidBody) {
     // @ts-ignore
     this.name = ammo.name
   }
 
-  private error(error: string) {
-    if (!this.errors.includes(error)) {
-      this.errors.push(error)
-      logger(error)
-    }
+  private setupEventEmitter() {
+    if (typeof this.eventEmitter === 'undefined') this.eventEmitter = new EventEmitter()
+  }
+
+  public get needUpdate() {
+    return this._needUpdate
+  }
+  public set needUpdate(need: boolean) {
+    if (!need && this._needUpdate) this.didUpdate = true
+    this._needUpdate = need
+  }
+
+  private onUpdateEvent(updateCallback: Function, once: boolean = false) {
+    this.setupEventEmitter()
+    this._emitUpdateEvents = true
+    if (once)
+      this.eventEmitter.once('update', () => {
+        updateCallback()
+      })
+    else
+      this.eventEmitter.on('update', () => {
+        updateCallback()
+      })
   }
 
   public get on() {
     return {
+      update: (updateCallback: Function) => this.onUpdateEvent(updateCallback),
       collision: (collisionCallback: (otherObject: ExtendedObject3D, event: 'start' | 'collision' | 'end') => void) =>
         this.onCollision(collisionCallback)
+    }
+  }
+
+  public get once() {
+    return {
+      update: (updateCallback: Function) => this.onUpdateEvent(updateCallback, true)
     }
   }
 
