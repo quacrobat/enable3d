@@ -188,8 +188,8 @@ export default class Factories {
     const geometry =
       bufferGeometry || breakable
         ? new CylinderBufferGeometry(
-            rest.radiusTop || 0.5,
-            rest.radiusBottom || 0.5,
+            rest.radiusTop || 1,
+            rest.radiusBottom || 1,
             rest.height || 1,
             rest.radiusSegments || undefined,
             rest.heightSegments || undefined,
@@ -198,8 +198,8 @@ export default class Factories {
             rest.thetaLength || undefined
           )
         : new CylinderGeometry(
-            rest.radiusTop || 0.5,
-            rest.radiusBottom || 0.5,
+            rest.radiusTop || 1,
+            rest.radiusBottom || 1,
             rest.height || 1,
             rest.radiusSegments || undefined,
             rest.heightSegments || undefined,

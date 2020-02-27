@@ -24,13 +24,14 @@ import Constraints from './constraints'
 import Events from './events'
 import EventEmitter from 'eventemitter3'
 import Physics from './physics'
-import { Vector3, Quaternion, Scene } from '@enable3d/three-wrapper/src/index'
+import { Vector3, Quaternion, Scene, Mesh } from '@enable3d/three-wrapper/src/index'
 import { createCollisionShapes } from './three-to-ammo'
 import { addTorusShape } from './torusShape'
 import Factories from '@enable3d/common/src/factories'
 import { REVISION } from '@enable3d/three-wrapper/src/index'
 
 import { PhysicsLoader } from '@enable3d/common/src/physicsLoader'
+import ExtendedMesh from '@enable3d/common/src/extendedMesh'
 export { PhysicsLoader }
 
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}
@@ -126,14 +127,25 @@ class AmmoPhysics extends EventEmitter {
       width: 1,
       height: 1,
       depth: 1,
-      radius: 0.5,
-      radiusTop: 0.5, // for the cylinder
+      radius: 1,
+      radiusTop: 1, // for the cylinder
+      radiusBottom: 1, // for the cylinder
       tube: 0.4, // for the torus
-      tubularSegments: 8 // for the torus
+      tubularSegments: 6 // for the torus
     }
-    let shape = 'box'
-    let params = {}
 
+    let shape = 'box'
+    const type = object.geometry.type
+    // retrieve the shape from the geometry
+    if (/box/i.test(type)) shape = 'box'
+    else if (/cone/i.test(type)) shape = 'cone'
+    else if (/cylinder/i.test(type)) shape = 'cylinder'
+    else if (/extrude/i.test(type)) shape = 'extrude'
+    else if (/plane/i.test(type)) shape = 'plane'
+    else if (/sphere/i.test(type)) shape = 'sphere'
+    else if (/torus/i.test(type)) shape = 'torus'
+
+    let params = {}
     if (config.shape) {
       params = { ...defaultParams, ...config }
       shape = config.shape
@@ -141,8 +153,19 @@ class AmmoPhysics extends EventEmitter {
       // @ts-ignore
       params = { ...defaultParams, ...object?.geometry?.parameters }
       shape = object.shape
+    } else {
+      // @ts-ignore
+      params = { ...defaultParams, ...object?.geometry?.parameters }
     }
-    // TODO if there are parameter undefined in params, fill with default params
+
+    // Add default params if undefined
+    Object.keys(params).forEach(key => {
+      // @ts-ignore
+      if (typeof params[key] === 'undefined' && defaultParams[key]) {
+        // @ts-ignore
+        params[key] = defaultParams[key]
+      }
+    })
 
     if (hasBody) {
       logger(`Object "${object.name}" already has a physical body!`)

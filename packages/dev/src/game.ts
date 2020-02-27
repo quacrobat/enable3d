@@ -3,7 +3,7 @@ import Phaser from 'phaser'
 import PreloadScene from './scenes/preloadScene'
 import enable3d, { Canvas, ExtendedObject3D } from '@enable3d/phaser-extension'
 
-import { ThreeScene, PhysicsLoader } from '@enable3d/phaser-extension/node_modules/@enable3d/three-graphics'
+import { ThreeScene, PhysicsLoader, THREE } from '@enable3d/phaser-extension/node_modules/@enable3d/three-graphics'
 
 // const config: Phaser.Types.Core.GameConfig = {
 //   type: Phaser.WEBGL,
@@ -35,6 +35,14 @@ class MainScene extends ThreeScene {
     this.box = this.add.box({ y: 2 })
     this.physics.add.box({ y: 10 })
     this.physics.debug.enable()
+
+    // green sphere
+    const geometry = new THREE.SphereBufferGeometry()
+    const material = new THREE.MeshLambertMaterial({ color: 0x00ff00 })
+    const cube = new THREE.Mesh(geometry, material) as any
+    cube.position.set(0, 10, 0)
+    this.scene.add(cube)
+    this.physics.add.existing(cube)
   }
 
   update() {
