@@ -17,6 +17,10 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: ['.ts', '.js']
     },
+    externals: {
+      '@enable3d/three-wrapper/src/index': 'THREE',
+      '@enable3d/three-wrapper/src/examples': 'EXAMPLES'
+    },
     module: {
       rules: [
         {
