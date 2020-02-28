@@ -19,6 +19,9 @@ export { Canvas }
 import * as THREE from '@enable3d/three-wrapper/src/index'
 export { THREE }
 
+import * as Types from '@enable3d/common/src/types'
+export { Types }
+
 export class Scene3D extends Phaser.Scene {
   constructor(config: string | Phaser.Types.Scenes.SettingsConfig) {
     super(config)

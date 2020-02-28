@@ -23,8 +23,10 @@ import {
   WebGLRenderer
 } from '@enable3d/three-wrapper/src/index'
 import ExtendedObject3D from './extendedObject3D'
+import ExtendedMesh from './extendedMesh'
 
 export { ExtendedObject3D }
+export { ExtendedMesh }
 export { AnimationAction } from '@enable3d/three-wrapper/src/index'
 // TODO fix this export
 // export { ThirdPersonControls } from '../misc/thirdPersonControls'

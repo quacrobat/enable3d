@@ -9,3 +9,6 @@ export { PhysicsLoader }
 
 import * as THREE from '@enable3d/three-wrapper/src/index'
 export { THREE }
+
+import * as Types from '@enable3d/common/src/types'
+export { Types }

@@ -31,9 +31,11 @@ import Factories from '@enable3d/common/src/factories'
 import { REVISION } from '@enable3d/three-wrapper/src/index'
 
 import { PhysicsLoader } from '@enable3d/common/src/physicsLoader'
-import ExtendedMesh from '@enable3d/common/src/extendedMesh'
 import DefaultMaterial from '@enable3d/common/src/defaultMaterial'
 export { PhysicsLoader }
+
+import * as Types from '@enable3d/common/src/types'
+export { Types }
 
 interface AmmoPhysics extends Physics, Constraints, Shapes, Events {}
 
