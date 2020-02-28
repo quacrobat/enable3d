@@ -12,7 +12,13 @@ import {
   XYZ,
   CylinderConfig,
   ExtrudeConfig,
-  TorusConfig
+  TorusConfig,
+  BoxObject,
+  GroundObject,
+  SphereObject,
+  CylinderObject,
+  ExtrudeObject,
+  AddMaterial
 } from './types'
 import {
   SphereGeometry,
@@ -50,11 +56,71 @@ import DefaultMaterial from './defaultMaterial'
 export default class Factories {
   protected defaultMaterial: DefaultMaterial
 
-  constructor(public scene: Scene) {
+  constructor(private scene: Scene) {
     this.defaultMaterial = new DefaultMaterial()
   }
 
-  public addMesh(mesh: Object3D) {
+  public get make(): {
+    extrude: ExtrudeObject
+    // geometries
+    box: BoxObject
+    sphere: SphereObject
+    cylinder: CylinderObject
+    torus: (torusConfig?: TorusConfig, materialConfig?: MaterialConfig) => ExtendedObject3D
+  } {
+    return {
+      box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) => this.makeBox(boxConfig, materialConfig),
+      sphere: (sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.makeSphere(sphereConfig, materialConfig),
+      cylinder: (cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.makeCylinder(cylinderConfig, materialConfig),
+      torus: (torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.makeTorus(torusConfig, materialConfig),
+      extrude: (extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) =>
+        this.makeExtrude(extrudeConfig, materialConfig)
+    }
+  }
+
+  public get add(): {
+    mesh: any
+    material: AddMaterial
+    extrude: ExtrudeObject
+    existing: any
+    ground: GroundObject
+    // geometries
+    box: BoxObject
+    sphere: SphereObject
+    cylinder: CylinderObject
+    torus: (torusConfig?: TorusConfig, materialConfig?: MaterialConfig) => ExtendedObject3D
+  } {
+    return {
+      // effectComposer: () => this.addEffectComposer(),
+      mesh: (mesh: any) => this.addMesh(mesh),
+      // group: (...children) => this.addGroup(children),
+      existing: (object: ExtendedObject3D | Mesh | Line | Points) => this.addExisting(object),
+      //  Geometry
+      box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) => this.addBox(boxConfig, materialConfig),
+      ground: (groundConfig: GroundConfig, materialConfig: MaterialConfig = {}) =>
+        this.addGround(groundConfig, materialConfig),
+      //...
+      sphere: (sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.addSphere(sphereConfig, materialConfig),
+      cylinder: (cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.addCylinder(cylinderConfig, materialConfig),
+      torus: (torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.addTorus(torusConfig, materialConfig),
+      extrude: (extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) =>
+        this.addExtrude(extrudeConfig, materialConfig),
+      //...
+      material: (materialConfig: MaterialConfig = {}) => this.addMaterial(materialConfig)
+    }
+  }
+
+  private addExisting(object: ExtendedObject3D | Mesh | Line | Points) {
+    this.scene.add(object)
+  }
+
+  private addMesh(mesh: Object3D) {
     if (Array.isArray(mesh)) {
       for (let i = 0; i < mesh.length; i++) {
         this.scene.add(mesh[i])
@@ -65,7 +131,7 @@ export default class Factories {
     return this
   }
 
-  public createMesh(geometry: any, material: Material | Material[], position: XYZ): Line | Points | Mesh {
+  private createMesh(geometry: any, material: Material | Material[], position: XYZ): Line | Points | Mesh {
     const { x = 0, y = 0, z = 0 } = position
 
     let obj
@@ -86,7 +152,7 @@ export default class Factories {
     return obj
   }
 
-  public makeExtrude(extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig) {
+  private makeExtrude(extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig) {
     const { x, y, z, name, shape, autoCenter = true, breakable = false, bufferGeometry = true, ...rest } = extrudeConfig
     const { depth = 1, bevelEnabled = false } = rest
     const geometry =
@@ -102,13 +168,13 @@ export default class Factories {
     return mesh
   }
 
-  public addExtrude(extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  private addExtrude(extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeExtrude(extrudeConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }
 
-  public makeSphere(sphereConfig: SphereConfig, materialConfig: MaterialConfig): ExtendedObject3D {
+  private makeSphere(sphereConfig: SphereConfig, materialConfig: MaterialConfig): ExtendedObject3D {
     const { x, y, z, name, breakable = false, bufferGeometry = true, ...rest } = sphereConfig
     const geometry =
       bufferGeometry || breakable
@@ -137,13 +203,13 @@ export default class Factories {
     return mesh
   }
 
-  public addSphere(sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  private addSphere(sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeSphere(sphereConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }
 
-  public makeBox(boxConfig: BoxConfig, materialConfig: MaterialConfig): ExtendedObject3D {
+  private makeBox(boxConfig: BoxConfig, materialConfig: MaterialConfig): ExtendedObject3D {
     const { x, y, z, name, breakable = false, bufferGeometry = true, ...rest } = boxConfig
     const geometry =
       bufferGeometry || breakable
@@ -170,20 +236,20 @@ export default class Factories {
     return mesh
   }
 
-  public addBox(boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  private addBox(boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeBox(boxConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }
 
-  public addGround(groundConfig: GroundConfig, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  private addGround(groundConfig: GroundConfig, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeBox(groundConfig, materialConfig)
     obj.rotateX(THREE_Math.degToRad(90))
     this.scene.add(obj)
     return obj
   }
 
-  public makeCylinder(cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  private makeCylinder(cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const { x, y, z, name, breakable = false, bufferGeometry = true, ...rest } = cylinderConfig
     const geometry =
       bufferGeometry || breakable
@@ -214,14 +280,14 @@ export default class Factories {
     return mesh
   }
 
-  public addCylinder(cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  private addCylinder(cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeCylinder(cylinderConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }
 
   // https://threejs.org/docs/index.html#api/en/geometries/TorusBufferGeometry
-  public makeTorus(torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  private makeTorus(torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const { x, y, z, name, breakable = false, bufferGeometry = true, ...rest } = torusConfig
     const geometry =
       bufferGeometry || breakable
@@ -246,13 +312,13 @@ export default class Factories {
     return mesh
   }
 
-  public addTorus(torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+  private addTorus(torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeTorus(torusConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }
 
-  public addMaterial(materialConfig: MaterialConfig = {}) {
+  private addMaterial(materialConfig: MaterialConfig = {}) {
     const type = Object.keys(materialConfig)[0]
     let material: Material | Material[]
 

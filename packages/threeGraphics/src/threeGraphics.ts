@@ -272,26 +272,26 @@ class ThreeGraphics {
       // spotLight: config => this.addSpotLight(config),
 
       // effectComposer: () => this.addEffectComposer(),
-      mesh: (mesh: any) => this.factory.addMesh(mesh),
+      mesh: (mesh: any) => this.factory.add.mesh(mesh),
       // group: (...children) => this.addGroup(children),
-      existing: (object: ExtendedObject3D | Mesh | Line | Points) => this.addExisting(object),
+      existing: (object: ExtendedObject3D | Mesh | Line | Points) => this.add.existing(object),
       heightMap: (texture: Texture, config: HeightMapConfig = {}) => this.addHeightMap(texture, config),
       //  Geometry
       box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.factory.addBox(boxConfig, materialConfig),
+        this.factory.add.box(boxConfig, materialConfig),
       ground: (groundConfig: GroundConfig, materialConfig: MaterialConfig = {}) =>
-        this.factory.addGround(groundConfig, materialConfig),
+        this.factory.add.ground(groundConfig, materialConfig),
       //...
       sphere: (sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.factory.addSphere(sphereConfig, materialConfig),
+        this.factory.add.sphere(sphereConfig, materialConfig),
       cylinder: (cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.factory.addCylinder(cylinderConfig, materialConfig),
+        this.factory.add.cylinder(cylinderConfig, materialConfig),
       torus: (torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.factory.addTorus(torusConfig, materialConfig),
+        this.factory.add.torus(torusConfig, materialConfig),
       extrude: (extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) =>
-        this.factory.addExtrude(extrudeConfig, materialConfig),
+        this.factory.add.extrude(extrudeConfig, materialConfig),
       //...
-      material: (materialConfig: MaterialConfig = {}) => this.factory.addMaterial(materialConfig),
+      material: (materialConfig: MaterialConfig = {}) => this.factory.add.material(materialConfig),
       water: (config: any) => addWater(config, this.scene)
     }
   }
@@ -301,10 +301,6 @@ class ThreeGraphics {
    */
   public get chroma() {
     return chroma
-  }
-
-  private addExisting(object: ExtendedObject3D | Mesh | Line | Points) {
-    this.scene.add(object)
   }
 
   public radToDeg(number: number) {
@@ -317,20 +313,18 @@ class ThreeGraphics {
     cylinder: CylinderObject
     torus: (torusConfig?: TorusConfig, materialConfig?: MaterialConfig) => ExtendedObject3D
     extrude: ExtrudeObject
-    heightMap: HeightMapObject
   } {
     return {
       box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.factory.makeBox(boxConfig, materialConfig),
+        this.factory.make.box(boxConfig, materialConfig),
       sphere: (sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.factory.makeSphere(sphereConfig, materialConfig),
+        this.factory.make.sphere(sphereConfig, materialConfig),
       cylinder: (cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.factory.makeCylinder(cylinderConfig, materialConfig),
+        this.factory.make.cylinder(cylinderConfig, materialConfig),
       torus: (torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) =>
-        this.factory.makeTorus(torusConfig, materialConfig),
+        this.factory.make.torus(torusConfig, materialConfig),
       extrude: (extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) =>
-        this.factory.makeExtrude(extrudeConfig, materialConfig),
-      heightMap: (texture: Texture, config: HeightMapConfig = {}) => this.makeHeightMap(texture, config)
+        this.factory.make.extrude(extrudeConfig, materialConfig)
     }
   }
 
