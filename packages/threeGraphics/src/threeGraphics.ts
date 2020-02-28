@@ -274,7 +274,7 @@ class ThreeGraphics {
       // effectComposer: () => this.addEffectComposer(),
       mesh: (mesh: any) => this.factory.add.mesh(mesh),
       // group: (...children) => this.addGroup(children),
-      existing: (object: ExtendedObject3D | Mesh | Line | Points) => this.add.existing(object),
+      existing: (object: ExtendedObject3D | Mesh | Line | Points) => this.factory.add.existing(object),
       heightMap: (texture: Texture, config: HeightMapConfig = {}) => this.addHeightMap(texture, config),
       //  Geometry
       box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) =>
