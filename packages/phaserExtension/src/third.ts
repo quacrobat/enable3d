@@ -54,6 +54,8 @@ class Third extends ThreeGraphics {
     if (!this.isXrEnabled) {
       scene3D.events.on('update', (_time: number, delta: number) => {
         this.mixers.update(delta)
+        this.physics?.update(delta)
+        this.physics?.updateDebugger()
       })
     }
 
