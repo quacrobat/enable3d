@@ -191,7 +191,7 @@ class AmmoPhysics extends EventEmitter {
     }
 
     let shape = 'box'
-    const type = object.geometry.type
+    const type = object.geometry?.type || 'box'
     // retrieve the shape from the geometry
     if (/box/i.test(type)) shape = 'box'
     else if (/cone/i.test(type)) shape = 'cone'
