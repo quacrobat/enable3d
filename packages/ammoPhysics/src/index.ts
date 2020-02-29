@@ -256,11 +256,11 @@ class AmmoPhysics extends EventEmitter {
       return
     }
 
-    Shape.setMargin(0.05)
-
     if (children.length >= 1) {
       Shape = this.addCompoundShape([Shape, ...children])
     }
+
+    Shape.setMargin(0.05)
 
     if (!addRigidBody) return Shape
 
