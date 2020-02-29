@@ -184,9 +184,11 @@ class AmmoPhysics extends EventEmitter {
     const children: any[] = []
     if (object.children.length >= 1) {
       object.children.forEach((child: any) => {
-        const shape = this.addExisting(child, { addRigidBody: false })
-        shape.tmp = { offset: child.position.clone() }
-        children.push(shape)
+        if (child.isMesh) {
+          const shape = this.addExisting(child, { addRigidBody: false })
+          shape.tmp = { offset: child.position.clone() }
+          children.push(shape)
+        }
       })
     }
 
