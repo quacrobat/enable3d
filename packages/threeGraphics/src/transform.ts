@@ -35,20 +35,17 @@ export default class Transform {
         if (bufferGeometry.isBufferGeometry) return new Geometry().fromBufferGeometry(bufferGeometry)
         else return bufferGeometry as Geometry
       },
-      fromSVGtoShape: (key: string, isCCW?: boolean, noHoles?: boolean) =>
-        this.transformFromSVGtoShape(key, isCCW, noHoles),
+      fromSVGtoShape: (svg: string, isCCW?: boolean, noHoles?: boolean) =>
+        this.transformFromSVGtoShape(svg, isCCW, noHoles),
       from3dto2d: (position: Vector3) => this.transformFrom3dto2d(position),
       from2dto3d: (x: number, y: number, z: number = 0) => this.transformFrom2dto3d(x, y, z)
     }
   }
 
   /**
-   * Transforms your svg files to paths. First load your svg files using 'this.load.html(path_to_file)' in preload().
+   * Transforms your svg files to paths.
    */
-  private transformFromSVGtoShape(_key: string, _isCCW: boolean = false, _noHoles?: boolean) {
-    // TODO fix this
-    console.log('sorry transformFromSVGtoShape is currently disabled')
-    /*const svg = this.root.cache.html.get(key)
+  private transformFromSVGtoShape(svg: string, isCCW: boolean = false, noHoles?: boolean) {
     if (svg) {
       const svgLoader = this.new.svgLoader()
       const shapes: Shape[] = []
@@ -59,7 +56,7 @@ export default class Transform {
       })
       return shapes
     }
-    return []*/
+    return []
   }
 
   private transformFrom3dto2d(position: Vector3): Vector2 {
