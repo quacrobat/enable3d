@@ -202,4 +202,5 @@ export interface AddExistingConfig extends XYZ {
   offset?: { x?: number; y?: number; z?: number }
   breakable?: boolean
   addRigidBody?: boolean
+  addChildren?: boolean
 }

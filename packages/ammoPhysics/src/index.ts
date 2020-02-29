@@ -166,7 +166,8 @@ class AmmoPhysics extends EventEmitter {
       offset = undefined,
       shapes = [],
       breakable = false,
-      addRigidBody = true
+      addRigidBody = true,
+      addChildren = true
     } = config
 
     const defaultParams = {
@@ -182,7 +183,7 @@ class AmmoPhysics extends EventEmitter {
 
     // check if the object has children
     const children: any[] = []
-    if (object.children.length >= 1) {
+    if (addChildren && object.children.length >= 1) {
       object.children.forEach((child: any) => {
         if (child.isMesh) {
           const shape = this.addExisting(child, { addRigidBody: false })
