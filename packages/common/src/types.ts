@@ -190,7 +190,7 @@ export interface HeightMapConfig {
   colorScale?: any // chroma.Scale<chroma.Color>
 }
 
-export interface AddExistingConfig {
+export interface AddExistingConfig extends XYZ {
   width?: number
   height?: number
   depth?: number

@@ -245,7 +245,11 @@ class AmmoPhysics extends EventEmitter {
       const tmp: any[] = [] // stores all the raw shapes
 
       shapes.forEach(obj => {
-        tmp.push(this.addShape({ shape: obj.shape, params: { ...obj } }))
+        const s = this.addShape({ shape: obj.shape, params: { ...obj } })
+        // @ts-ignore
+        s.tmp = { offset: { x: obj.x || 0, y: obj.y || 0, z: obj.z || 0 } }
+        // TODO add rotation as well
+        tmp.push(s)
       })
 
       Shape = this.addCompoundShape(tmp)
