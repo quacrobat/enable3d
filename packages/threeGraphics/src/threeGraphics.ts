@@ -226,7 +226,7 @@ class ThreeGraphics {
     }
   }
 
-  private get loadAsync() {
+  protected get loadAsync() {
     return {
       texture: (url: string) => this.loadTextureAsync(url),
       gltf: (url: string) => this.loadGLTFAsync(url)

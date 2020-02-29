@@ -7,10 +7,11 @@
 import { ThreeGraphics } from '@enable3d/three-graphics/src/index'
 import { Phaser3DConfig } from '@enable3d/common/src/types'
 import { Scene3D } from '.'
-import { WebGLRenderer, Object3D } from '@enable3d/three-wrapper/src/index'
+import { WebGLRenderer, Object3D, Texture, RGBAFormat } from '@enable3d/three-wrapper/src/index'
 import { FirstPersonControlsConfig, FirstPersonControls } from './misc/firstPersonControls'
 import { ThirdPersonControlsConfig, ThirdPersonControls } from './misc/thirdPersonControls'
 import JoyStick from './misc/joystick'
+import { GLTFLoader, FBXLoader } from '@enable3d/three-wrapper/src/examples'
 
 /**
  * The phaser wrapper for ThreeGraphics, which is a separate module
@@ -73,6 +74,36 @@ class Third extends ThreeGraphics {
     scene3D.events.once('shutdown', () => {
       scene3D.events.removeListener('update')
     })
+  }
+
+  // this extends load() from threeGraphics.ts, with this.loadFromCache
+  public get load() {
+    return {
+      texture: (url: string) => this.loadTexture(url),
+      gltf: (url: string, cb: Function) => this.loadGLTF(url, cb),
+      fbx: (path: string, cb: (object: any) => void) => this.loadFBX(path, cb),
+      async: this.loadAsync,
+      cache: this.loadFromCache
+    }
+  }
+
+  private get loadFromCache() {
+    return {
+      gltf: (key: string, cb: Function) => {
+        const loader = new GLTFLoader()
+        const data = this.scene3D.cache.binary.get(key)
+        loader.parse(data, '', object => cb(object))
+      },
+      texture: (key: string) => {
+        const texture = new Texture()
+        texture.image = this.scene3D.textures.get(key).getSourceImage()
+        texture.format = RGBAFormat
+        texture.needsUpdate = true
+        texture.anisotropy = this.textureAnisotropy
+        // texture.encoding = sRGBEncoding
+        return texture
+      }
+    }
   }
 
   get controls() {
