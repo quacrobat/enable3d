@@ -245,6 +245,14 @@ class PhysicsBody {
   public setFriction(value: number) {
     this.ammo.setFriction(value)
   }
+
+  public setCcdMotionThreshold(threshold: number) {
+    this.ammo.setCcdMotionThreshold(threshold)
+  }
+
+  public setCcdSweptSphereRadius(radius: number) {
+    this.ammo.setCcdSweptSphereRadius(radius)
+  }
 }
 
 export default PhysicsBody
