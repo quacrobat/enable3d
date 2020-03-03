@@ -233,6 +233,14 @@ class PhysicsBody {
     this.setRestitution(value)
   }
 
+  /**
+   * Set the friction
+   * @param value A number from 0 to 1.
+   */
+  public setFriction(value: number) {
+    this.ammo.setFriction(value)
+  }
+
   public setLinearFactor(x: number, y: number, z: number) {
     this.tmpBtVector3.setValue(x, y, z)
     this.ammo.setLinearFactor(this.tmpBtVector3)
@@ -240,10 +248,6 @@ class PhysicsBody {
   public setAngularFactor(x: number, y: number, z: number) {
     this.tmpBtVector3.setValue(x, y, z)
     this.ammo.setAngularFactor(this.tmpBtVector3)
-  }
-
-  public setFriction(value: number) {
-    this.ammo.setFriction(value)
   }
 
   public setCcdMotionThreshold(threshold: number) {
