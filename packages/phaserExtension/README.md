@@ -17,16 +17,16 @@ Written in TypeScript, uses three.js and ammo.js, brings the third dimension to 
 
 ## Install
 
-Install phaser and enable3d via npm:
+Install phaser and @enable3d/phaser-extension via npm:
 
 ```console
-npm i phaser enable3d
+npm i phaser @enable3d/phaser-extension
 ```
 
-## How to use
+## Documentation
 
-Read more on [github.com](https://github.com/yandeu/enable3d#readme)
+Take a lok at [enable3d.io/docs.html](https://enable3d.io/docs.html)
 
 ## Examples
 
-Take a look at [enable3d.io](https://enable3d.io/examples.html)
+Take a look at [enable3d.io/examples.html](https://enable3d.io/examples.html)
