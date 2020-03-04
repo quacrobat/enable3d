@@ -7,22 +7,21 @@
   "license": "GNU GPLv3",
   "scripts": {
     "tsc": "tsc",
-    "bundle": "webpack --config ../../webpack/webpack.phaserExtension.js --path=../bundles --packageVersion=${npm_package_version}",
-    "build": "tsc --build tsconfig.json",
-    "prepublishOnly": "npm run build"
+    "bundle": "webpack --config ../../webpack/webpack.phaserExtension.js --path=../bundles --packageVersion=${npm_package_version}"
   },
   "keywords": [
     "phaser",
-    "threejs",
-    "ammojs",
+    "three",
+    "ammo",
     "game",
     "3d",
-    "framework"
+    "framework",
+    "physics"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yandeu/enable3d.git",
-    "directory": "packages/enable3d"
+    "directory": "packages/phaserExtension"
   },
   "bugs": {
     "url": "https://github.com/yandeu/enable3d/issues"

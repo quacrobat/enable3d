@@ -5,7 +5,6 @@
   "main": "dist/index.js",
   "scripts": {
     "tsc": "tsc",
-    "build": "tsc",
     "bundle": "webpack --config ../../webpack/webpack.threeGraphics.js --path=../bundles --packageVersion=${npm_package_version}"
   },
   "keywords": [],
