@@ -27,12 +27,12 @@ import ExtendedMesh from './extendedMesh'
 
 export { ExtendedObject3D }
 export { ExtendedMesh }
-export { AnimationAction } from '@enable3d/three-wrapper/src/index'
 // TODO fix this export
 // export { ThirdPersonControls } from '../misc/thirdPersonControls'
 export {
   AnimationMixer,
   AnimationClip,
+  AnimationAction,
   Object3D,
   Mesh,
   Material,
