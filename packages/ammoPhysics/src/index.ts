@@ -319,6 +319,9 @@ class AmmoPhysics extends EventEmitter {
       case 'torus':
         Shape = addTorusShape(params, quat)
         break
+      case 'capsule':
+        Shape = new Ammo.btCapsuleShape(params.radius, params.height)
+        break
       case 'hull':
         Shape = createCollisionShapes(object, { type: 'hull' })
         break
