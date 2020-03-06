@@ -122,6 +122,9 @@ export interface GroundObject {
 export interface CylinderObject {
   (cylinderConfig?: CylinderConfig, materialConfig?: MaterialConfig): ExtendedObject3D
 }
+export interface ConeObject {
+  (coneConfig?: ConeConfig, materialConfig?: MaterialConfig): ExtendedObject3D
+}
 export interface ExtrudeObject {
   (extrudeConfig: ExtrudeConfig, materialConfig?: MaterialConfig): ExtendedObject3D
 }
@@ -171,6 +174,16 @@ export interface GroundConfig extends BoxConfig {
 export interface CylinderConfig extends GeometryConfig, XYZ, WH {
   radiusTop?: number
   radiusBottom?: number
+  height?: number
+  radiusSegments?: number
+  heightSegments?: number
+  openEnded?: boolean
+  thetaStart?: number
+  thetaLength?: number
+}
+
+export interface ConeConfig extends GeometryConfig, XYZ, WH {
+  radius?: number
   height?: number
   radiusSegments?: number
   heightSegments?: number

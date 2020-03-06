@@ -20,7 +20,9 @@ import {
   ExtrudeObject,
   AddMaterial,
   PlaneObject,
-  PlaneConfig
+  PlaneConfig,
+  ConeObject,
+  ConeConfig
 } from './types'
 import {
   SphereGeometry,
@@ -51,7 +53,8 @@ import {
   TorusBufferGeometry,
   PlaneBufferGeometry,
   PlaneGeometry,
-  DoubleSide
+  DoubleSide,
+  ConeBufferGeometry
 } from '@enable3d/three-wrapper/src/index'
 import ExtendedObject3D from './extendedObject3D'
 import ExtendedMesh from './extendedMesh'
@@ -72,6 +75,7 @@ export default class Factories {
     box: BoxObject
     sphere: SphereObject
     cylinder: CylinderObject
+    cone: ConeObject
     torus: (torusConfig?: TorusConfig, materialConfig?: MaterialConfig) => ExtendedObject3D
   } {
     return {
@@ -82,6 +86,8 @@ export default class Factories {
         this.makeSphere(sphereConfig, materialConfig),
       cylinder: (cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.makeCylinder(cylinderConfig, materialConfig),
+      cone: (coneConfig: ConeConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.makeCone(coneConfig, materialConfig),
       torus: (torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.makeTorus(torusConfig, materialConfig),
       extrude: (extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) =>
@@ -100,6 +106,7 @@ export default class Factories {
     box: BoxObject
     sphere: SphereObject
     cylinder: CylinderObject
+    cone: ConeObject
     torus: (torusConfig?: TorusConfig, materialConfig?: MaterialConfig) => ExtendedObject3D
   } {
     return {
@@ -118,6 +125,8 @@ export default class Factories {
         this.addSphere(sphereConfig, materialConfig),
       cylinder: (cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.addCylinder(cylinderConfig, materialConfig),
+      cone: (coneConfig: ConeConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.addCone(coneConfig, materialConfig),
       torus: (torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.addTorus(torusConfig, materialConfig),
       extrude: (extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) =>
@@ -313,6 +322,41 @@ export default class Factories {
 
   private addCylinder(cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeCylinder(cylinderConfig, materialConfig)
+    this.scene.add(obj)
+    return obj
+  }
+
+  private makeCone(coneConfig: ConeConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+    const { x, y, z, name, breakable = false, bufferGeometry = true, ...rest } = coneConfig
+    const geometry =
+      bufferGeometry || breakable
+        ? new ConeBufferGeometry(
+            rest.radius || 1,
+            rest.height || 1,
+            rest.radiusSegments || 8,
+            rest.heightSegments || 1,
+            rest.openEnded || false,
+            rest.thetaStart || 0,
+            rest.thetaLength || 2 * Math.PI
+          )
+        : new ConeBufferGeometry(
+            rest.radius || 1,
+            rest.height || 1,
+            rest.radiusSegments || 8,
+            rest.heightSegments || 1,
+            rest.openEnded || false,
+            rest.thetaStart || 0,
+            rest.thetaLength || 2 * Math.PI
+          )
+    const material = this.addMaterial(materialConfig)
+    const mesh = this.createMesh(geometry, material, { x, y, z }) as ExtendedObject3D
+    mesh.name = name || `body_id_${mesh.id}`
+    mesh.shape = 'cone'
+    return mesh
+  }
+
+  private addCone(coneConfig: ConeConfig = {}, materialConfig: MaterialConfig = {}): ExtendedObject3D {
+    const obj = this.makeCone(coneConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }

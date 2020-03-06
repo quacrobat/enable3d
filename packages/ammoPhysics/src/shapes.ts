@@ -14,7 +14,8 @@ import {
   ExtrudeConfig,
   TorusConfig,
   AddExistingConfig,
-  PlaneConfig
+  PlaneConfig,
+  ConeConfig
 } from '@enable3d/common/src/types'
 import Factories from '@enable3d/common/src/factories'
 
@@ -56,6 +57,12 @@ class Shapes {
     const cylinder = this.factory.add.cylinder(cylinderConfig, materialConfig)
     this.addExisting(cylinder, cylinderConfig)
     return cylinder
+  }
+
+  protected addCone(coneConfig: ConeConfig = {}, materialConfig: MaterialConfig = {}) {
+    const cone = this.factory.add.cone(coneConfig, materialConfig)
+    this.addExisting(cone, coneConfig)
+    return cone
   }
 
   protected addTorus(torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) {

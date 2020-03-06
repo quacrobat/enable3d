@@ -85,7 +85,9 @@ import {
   AddMaterial,
   TorusConfig,
   PlaneObject,
-  PlaneConfig
+  PlaneConfig,
+  ConeObject,
+  ConeConfig
 } from '@enable3d/common/src/types'
 import ExtendedObject3D from '@enable3d/common/src/extendedObject3D'
 import applyMixins from '@enable3d/common/src/applyMixins'
@@ -260,6 +262,7 @@ class ThreeGraphics {
     ground: GroundObject
     sphere: SphereObject
     cylinder: CylinderObject
+    cone: ConeObject
     torus: (torusConfig?: TorusConfig, materialConfig?: MaterialConfig) => ExtendedObject3D
     extrude: ExtrudeObject
     material: AddMaterial
@@ -291,6 +294,8 @@ class ThreeGraphics {
         this.factory.add.sphere(sphereConfig, materialConfig),
       cylinder: (cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.factory.add.cylinder(cylinderConfig, materialConfig),
+      cone: (coneConfig: ConeConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.factory.add.cone(coneConfig, materialConfig),
       torus: (torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.factory.add.torus(torusConfig, materialConfig),
       extrude: (extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) =>
@@ -317,6 +322,7 @@ class ThreeGraphics {
     box: BoxObject
     sphere: SphereObject
     cylinder: CylinderObject
+    cone: ConeObject
     torus: (torusConfig?: TorusConfig, materialConfig?: MaterialConfig) => ExtendedObject3D
     extrude: ExtrudeObject
   } {
@@ -329,6 +335,8 @@ class ThreeGraphics {
         this.factory.make.sphere(sphereConfig, materialConfig),
       cylinder: (cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.factory.make.cylinder(cylinderConfig, materialConfig),
+      cone: (coneConfig: ConeConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.factory.make.cone(coneConfig, materialConfig),
       torus: (torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.factory.make.torus(torusConfig, materialConfig),
       extrude: (extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) =>

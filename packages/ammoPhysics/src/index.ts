@@ -13,6 +13,7 @@ import {
   MaterialConfig,
   BoxConfig,
   CylinderConfig,
+  ConeConfig,
   ExtrudeConfig,
   Phaser3DConfig,
   AddExistingConfig,
@@ -134,6 +135,8 @@ class AmmoPhysics extends EventEmitter {
       box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) => this.addBox(boxConfig, materialConfig),
       cylinder: (cylinderConfig: CylinderConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.addCylinder(cylinderConfig, materialConfig),
+      cone: (coneConfig: ConeConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.addCone(coneConfig, materialConfig),
       torus: (torusConfig: TorusConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.addTorus(torusConfig, materialConfig),
       extrude: (extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}) =>
@@ -296,8 +299,6 @@ class AmmoPhysics extends EventEmitter {
   private addShape(opts: any) {
     const { shape, object, params, quat } = opts
 
-    if (shape === 'plane') console.log(object)
-
     let Shape
     switch (shape) {
       case 'plane':
@@ -311,6 +312,9 @@ class AmmoPhysics extends EventEmitter {
         break
       case 'cylinder':
         Shape = new Ammo.btCylinderShape(new Ammo.btVector3(params.radiusTop, params.height / 2, 0))
+        break
+      case 'cone':
+        Shape = new Ammo.btConeShape(params.radius, params.height)
         break
       case 'torus':
         Shape = addTorusShape(params, quat)
