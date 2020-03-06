@@ -7,6 +7,7 @@
 import logger from '@enable3d/common/src/logger'
 import PhysicsBody from './physicsBody'
 import {
+  PlaneConfig,
   SphereConfig,
   GroundConfig,
   MaterialConfig,
@@ -124,6 +125,8 @@ class AmmoPhysics extends EventEmitter {
       ) => this.addCollider(object1, object2, eventCallback),
       constraints: this.addConstraints,
       existing: (object: ExtendedObject3D, config?: AddExistingConfig) => this.addExisting(object, config),
+      plane: (planeConfig: PlaneConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.addPlane(planeConfig, materialConfig),
       sphere: (sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.addSphere(sphereConfig, materialConfig),
       ground: (groundConfig: GroundConfig = {}, materialConfig: MaterialConfig = {}) =>
@@ -293,8 +296,13 @@ class AmmoPhysics extends EventEmitter {
   private addShape(opts: any) {
     const { shape, object, params, quat } = opts
 
+    if (shape === 'plane') console.log(object)
+
     let Shape
     switch (shape) {
+      case 'plane':
+        Shape = createCollisionShapes(object, { type: 'mesh', concave: false })
+        break
       case 'box':
         Shape = new Ammo.btBoxShape(new Ammo.btVector3(params.width / 2, params.height / 2, params.depth / 2))
         break

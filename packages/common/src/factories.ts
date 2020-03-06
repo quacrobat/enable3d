@@ -18,7 +18,9 @@ import {
   SphereObject,
   CylinderObject,
   ExtrudeObject,
-  AddMaterial
+  AddMaterial,
+  PlaneObject,
+  PlaneConfig
 } from './types'
 import {
   SphereGeometry,
@@ -46,7 +48,10 @@ import {
   MeshPhysicalMaterial,
   MeshToonMaterial,
   TorusGeometry,
-  TorusBufferGeometry
+  TorusBufferGeometry,
+  PlaneBufferGeometry,
+  PlaneGeometry,
+  DoubleSide
 } from '@enable3d/three-wrapper/src/index'
 import ExtendedObject3D from './extendedObject3D'
 import ExtendedMesh from './extendedMesh'
@@ -63,12 +68,15 @@ export default class Factories {
   public get make(): {
     extrude: ExtrudeObject
     // geometries
+    plane: PlaneObject
     box: BoxObject
     sphere: SphereObject
     cylinder: CylinderObject
     torus: (torusConfig?: TorusConfig, materialConfig?: MaterialConfig) => ExtendedObject3D
   } {
     return {
+      plane: (planeConfig: PlaneConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.makePlane(planeConfig, materialConfig),
       box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) => this.makeBox(boxConfig, materialConfig),
       sphere: (sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.makeSphere(sphereConfig, materialConfig),
@@ -86,6 +94,7 @@ export default class Factories {
     material: AddMaterial
     extrude: ExtrudeObject
     existing: any
+    plane: PlaneObject
     ground: GroundObject
     // geometries
     box: BoxObject
@@ -99,6 +108,8 @@ export default class Factories {
       // group: (...children) => this.addGroup(children),
       existing: (object: ExtendedObject3D | Mesh | Line | Points) => this.addExisting(object),
       //  Geometry
+      plane: (planeConfig: PlaneConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.addPlane(planeConfig, materialConfig),
       box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) => this.addBox(boxConfig, materialConfig),
       ground: (groundConfig: GroundConfig, materialConfig: MaterialConfig = {}) =>
         this.addGround(groundConfig, materialConfig),
@@ -170,6 +181,26 @@ export default class Factories {
 
   private addExtrude(extrudeConfig: ExtrudeConfig, materialConfig: MaterialConfig = {}): ExtendedObject3D {
     const obj = this.makeExtrude(extrudeConfig, materialConfig)
+    this.scene.add(obj)
+    return obj
+  }
+
+  private makePlane(planeConfig: PlaneConfig, materialConfig: MaterialConfig): ExtendedObject3D {
+    const { x, y, z, name, breakable = false, bufferGeometry = true, ...rest } = planeConfig
+    const geometry =
+      bufferGeometry || breakable
+        ? new PlaneBufferGeometry(rest.width || 1, rest.height || 1, rest.widthSegments || 1, rest.heightSegments || 1)
+        : new PlaneGeometry(rest.width || 1, rest.height || 1, rest.widthSegments || 1, rest.heightSegments || 1)
+    const material = this.addMaterial(materialConfig) as Material
+    material.side = DoubleSide
+    const mesh = this.createMesh(geometry, material, { x, y, z }) as ExtendedObject3D
+    mesh.name = name || `body_id_${mesh.id}`
+    mesh.shape = 'plane'
+    return mesh
+  }
+
+  private addPlane(planeConfig: PlaneConfig, materialConfig: MaterialConfig): ExtendedObject3D {
+    const obj = this.makePlane(planeConfig, materialConfig)
     this.scene.add(obj)
     return obj
   }

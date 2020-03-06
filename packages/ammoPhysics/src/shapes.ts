@@ -13,7 +13,8 @@ import {
   ExtendedObject3D,
   ExtrudeConfig,
   TorusConfig,
-  AddExistingConfig
+  AddExistingConfig,
+  PlaneConfig
 } from '@enable3d/common/src/types'
 import Factories from '@enable3d/common/src/factories'
 
@@ -25,6 +26,12 @@ class Shapes {
   protected objectsAmmo: { [ptr: number]: any } = {}
   protected addExisting: (object: ExtendedObject3D, config?: AddExistingConfig) => void
   protected factory: Factories
+
+  protected addPlane(planeConfig: PlaneConfig = {}, materialConfig: MaterialConfig = {}) {
+    const plane = this.factory.add.plane(planeConfig, materialConfig)
+    this.addExisting(plane, planeConfig)
+    return plane
+  }
 
   protected addSphere(sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}) {
     const sphere = this.factory.add.sphere(sphereConfig, materialConfig)

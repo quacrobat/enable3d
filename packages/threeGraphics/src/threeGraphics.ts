@@ -83,7 +83,9 @@ import {
   HeightMapObject,
   HeightMapConfig,
   AddMaterial,
-  TorusConfig
+  TorusConfig,
+  PlaneObject,
+  PlaneConfig
 } from '@enable3d/common/src/types'
 import ExtendedObject3D from '@enable3d/common/src/extendedObject3D'
 import applyMixins from '@enable3d/common/src/applyMixins'
@@ -253,6 +255,7 @@ class ThreeGraphics {
     mesh: any
     existing: any
     heightMap: HeightMapObject
+    plane: PlaneObject
     box: BoxObject
     ground: GroundObject
     sphere: SphereObject
@@ -277,6 +280,8 @@ class ThreeGraphics {
       existing: (object: ExtendedObject3D | Mesh | Line | Points) => this.factory.add.existing(object),
       heightMap: (texture: Texture, config: HeightMapConfig = {}) => this.addHeightMap(texture, config),
       //  Geometry
+      plane: (planeConfig: PlaneConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.factory.add.plane(planeConfig, materialConfig),
       box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.factory.add.box(boxConfig, materialConfig),
       ground: (groundConfig: GroundConfig, materialConfig: MaterialConfig = {}) =>
@@ -308,6 +313,7 @@ class ThreeGraphics {
   }
 
   public get make(): {
+    plane: PlaneObject
     box: BoxObject
     sphere: SphereObject
     cylinder: CylinderObject
@@ -315,6 +321,8 @@ class ThreeGraphics {
     extrude: ExtrudeObject
   } {
     return {
+      plane: (planeConfig: PlaneConfig = {}, materialConfig: MaterialConfig = {}) =>
+        this.factory.make.plane(planeConfig, materialConfig),
       box: (boxConfig: BoxConfig = {}, materialConfig: MaterialConfig = {}) =>
         this.factory.make.box(boxConfig, materialConfig),
       sphere: (sphereConfig: SphereConfig = {}, materialConfig: MaterialConfig = {}) =>

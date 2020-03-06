@@ -107,6 +107,9 @@ export interface MaterialConfig {
   [key: string]: any
 }
 
+export interface PlaneObject {
+  (sphereConfig?: PlaneConfig, materialConfig?: MaterialConfig): ExtendedObject3D
+}
 export interface SphereObject {
   (sphereConfig?: SphereConfig, materialConfig?: MaterialConfig): ExtendedObject3D
 }
@@ -136,6 +139,11 @@ interface GeometryConfig {
   breakable?: boolean
   mass?: number
   bufferGeometry?: boolean
+}
+
+export interface PlaneConfig extends GeometryConfig, XYZ, WH {
+  widthSegments?: number
+  heightSegments?: number
 }
 
 export interface SphereConfig extends GeometryConfig, XYZ {
