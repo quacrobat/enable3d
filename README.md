@@ -1,7 +1,7 @@
 <h1 align="center">
   <a href="https://github.com/yandeu/enable3d#readme"><img src="readme/enable3d-logo-square.png" alt="enable3d logo" width="300"></a>
   <br>
-  Physics for three.js / 3D extension for Phaser 3 / Standalone Framework
+  Physics for three.js / 3D extension for Phaser 3 / Standalone 3D Framework
   <br>
 </h1>
 
