@@ -38,7 +38,7 @@ const startThreeScene = () => {
       this.physics.add.box({ y: 2, width: 4 }, { custom: textureCube.materials })
 
       // add hero
-      const hero = this.heroModel.scene as ExtendedObject3D
+      const hero = this.heroModel.scene as Types.ExtendedObject3D
       hero.scale.set(0.1, 0.1, 0.1)
       hero.position.set(2, 0, 2)
       this.scene.add(this.heroModel.scene)
