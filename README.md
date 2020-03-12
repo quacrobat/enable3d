@@ -30,7 +30,7 @@ Initially I only wanted to make a 3d extension for Phaser 3. That is where the n
 
 The structure looks like this:
 
-```bash
+```console
 ├─ @enable3d/phaser-extension      # 3d extension for Phaser
 │   └─ @enable3d/three-graphics    # 3d framework on top of three.js
 │       └─ @enable3d/ammo-physics  # Physics plugin for three.js
