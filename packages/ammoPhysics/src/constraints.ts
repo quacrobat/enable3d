@@ -8,6 +8,7 @@
 
 import PhysicsBody from './physicsBody'
 import { XYZ } from '@enable3d/common/dist/types'
+import Physics from './physics'
 
 export default class Constraints {
   public tmpTrans: Ammo.btTransform
@@ -38,7 +39,8 @@ export default class Constraints {
           targetAxis?: XYZ
         }
       ) => this.hinge(body, targetBody, config),
-      coneTwist: (body: PhysicsBody, targetPivot: XYZ) => this.coneTwist(body, targetPivot),
+      coneTwist: (bodyA: PhysicsBody, bodyB: PhysicsBody, pivotA: XYZ = {}, pivotB: XYZ = {}) =>
+        this.coneTwist(bodyA, bodyB, pivotA, pivotB),
       pointToPoint: (
         body: PhysicsBody,
         targetBody: PhysicsBody,
@@ -66,7 +68,7 @@ export default class Constraints {
     bodyA: Ammo.btRigidBody,
     bodyB: Ammo.btRigidBody,
     offset: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 },
-    center: boolean = true
+    center: boolean = false
   ) {
     offset = { x: 0, y: 0, z: 0, ...offset }
 
@@ -129,10 +131,10 @@ export default class Constraints {
       offset?: XYZ
     } = {}
   ) {
-    const { offset } = config
+    const { offset, center = false } = config
     const off = { x: 0, y: 0, z: 0, ...offset }
 
-    const transform = this.getTransform(bodyA.ammo, bodyB.ammo, off)
+    const transform = this.getTransform(bodyA.ammo, bodyB.ammo, off, center)
 
     const constraint = new Ammo.btGeneric6DofConstraint(
       bodyA.ammo,
@@ -266,11 +268,17 @@ export default class Constraints {
     this.physicsWorld.addConstraint(constraint)
   }
 
-  private coneTwist(body: PhysicsBody, targetPivot: XYZ = {}) {
-    const pivotTransform = new Ammo.btTransform()
-    pivotTransform.setIdentity()
-    pivotTransform.getOrigin().setValue(targetPivot?.x || 0, targetPivot?.y || 0, targetPivot?.z || 0)
-    const constraint = new Ammo.btConeTwistConstraint(body.ammo, pivotTransform)
+  private coneTwist(bodyA: PhysicsBody, bodyB: PhysicsBody, pivotA: XYZ = {}, pivotB: XYZ = {}) {
+    const frameA = new Ammo.btTransform()
+    frameA.setIdentity()
+    frameA.getOrigin().setValue(pivotA?.x || 0, pivotA?.y || 0, pivotA?.z || 0)
+
+    const frameB = new Ammo.btTransform()
+    frameB.setIdentity()
+    frameB.getOrigin().setValue(pivotB?.x || 0, pivotB?.y || 0, pivotB?.z || 0)
+
+    const constraint = new Ammo.btConeTwistConstraint(bodyA.ammo, bodyB.ammo, frameA, frameB)
+
     this.physicsWorld.addConstraint(constraint)
   }
 

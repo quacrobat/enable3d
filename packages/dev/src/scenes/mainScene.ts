@@ -35,11 +35,26 @@ export default class MainScene extends Scene3D {
     const dof = (x: number) => {
       let box1 = this.third.physics.add.box({ y: 2, x: x }, { custom: mat1 })
       let box2 = this.third.physics.add.box({ y: 2, x: x + 1.25, z: 0, mass: 0 }, { custom: mat2 })
-      this.third.physics.add.constraints.dof(box1.body, box2.body)
+      this.third.physics.add.constraints.dof(box1.body, box2.body, { center: true, offset: { y: -0.5 } })
+    }
+    const coneTwist = (x: number) => {
+      let box1 = this.third.physics.add.box({ y: 2, x: x }, { custom: mat1 })
+      let box2 = this.third.physics.add.box({ y: 2, x: x + 1.25, z: 0, mass: 0 }, { custom: mat2 })
+      this.third.physics.add.constraints.coneTwist(
+        box1.body,
+        box2.body,
+        {
+          x: +0.6,
+          y: 0.5,
+          z: 0.5
+        },
+        { x: -0.6, y: -0.5 }
+      )
     }
 
     pointToPoint(-4)
-    dof(0)
+    dof(4)
+    coneTwist(0)
   }
 
   update() {}
