@@ -32,8 +32,8 @@ export default class Constraints {
         body: PhysicsBody,
         targetBody: PhysicsBody,
         config: {
-          pivot?: XYZ
-          targetPivot?: XYZ
+          pivotA?: XYZ
+          pivotB?: XYZ
           axis?: XYZ
           targetAxis?: XYZ
         }
@@ -43,20 +43,33 @@ export default class Constraints {
         body: PhysicsBody,
         targetBody: PhysicsBody,
         config: {
-          pivot?: XYZ
-          targetPivot?: XYZ
+          pivotA?: XYZ
+          pivotB?: XYZ
         }
       ) => this.pointToPoint(body, targetBody, config),
-      dof: (bodyA: PhysicsBody, bodyB: PhysicsBody, config: any = {}) => this.dof(bodyA, bodyB, config)
+      dof: (
+        bodyA: PhysicsBody,
+        bodyB: PhysicsBody,
+        config?: {
+          linearLowerLimit?: XYZ
+          linearUpperLimit?: XYZ
+          angularLowerLimit?: XYZ
+          angularUpperLimit?: XYZ
+          center?: boolean
+          offset?: XYZ
+        }
+      ) => this.dof(bodyA, bodyB, config)
     }
   }
 
   private getTransform(
     bodyA: Ammo.btRigidBody,
     bodyB: Ammo.btRigidBody,
-    offset: { x: number; y: number; z: number } = { x: 0, y: -0.5, z: 0 },
+    offset: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 },
     center: boolean = true
   ) {
+    offset = { x: 0, y: 0, z: 0, ...offset }
+
     const centerVector = (v1: Ammo.btVector3, v2: Ammo.btVector3) => {
       var dx = (v1.x() - v2.x()) / 2 + offset.x
       var dy = (v1.y() - v2.y()) / 2 + offset.y
@@ -107,9 +120,19 @@ export default class Constraints {
   private dof(
     bodyA: PhysicsBody,
     bodyB: PhysicsBody,
-    config: { linearLowerLimit?: XYZ; linearUpperLimit?: XYZ; angularLowerLimit?: XYZ; angularUpperLimit?: XYZ } = {}
+    config: {
+      linearLowerLimit?: XYZ
+      linearUpperLimit?: XYZ
+      angularLowerLimit?: XYZ
+      angularUpperLimit?: XYZ
+      center?: boolean
+      offset?: XYZ
+    } = {}
   ) {
-    const transform = this.getTransform(bodyA.ammo, bodyB.ammo)
+    const { offset } = config
+    const off = { x: 0, y: 0, z: 0, ...offset }
+
+    const transform = this.getTransform(bodyA.ammo, bodyB.ammo, off)
 
     const constraint = new Ammo.btGeneric6DofConstraint(
       bodyA.ammo,
@@ -255,13 +278,13 @@ export default class Constraints {
     body: PhysicsBody,
     targetBody: PhysicsBody,
     config: {
-      pivot?: XYZ
-      targetPivot?: XYZ
+      pivotA?: XYZ
+      pivotB?: XYZ
     } = {}
   ) {
-    const { pivot, targetPivot } = config
-    const pivotV3 = new Ammo.btVector3(pivot?.x || 0, pivot?.y || 0, pivot?.z || 0)
-    const targetPivotV3 = new Ammo.btVector3(targetPivot?.x || 0, targetPivot?.y || 0, targetPivot?.z || 0)
+    const { pivotA, pivotB } = config
+    const pivotV3 = new Ammo.btVector3(pivotA?.x || 0, pivotA?.y || 0, pivotA?.z || 0)
+    const targetPivotV3 = new Ammo.btVector3(pivotB?.x || 0, pivotB?.y || 0, pivotB?.z || 0)
     const constraint = new Ammo.btPoint2PointConstraint(body.ammo, targetBody.ammo, pivotV3, targetPivotV3)
     this.physicsWorld.addConstraint(constraint)
   }

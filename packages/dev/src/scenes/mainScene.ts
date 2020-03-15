@@ -27,8 +27,8 @@ export default class MainScene extends Scene3D {
       let box2 = this.third.physics.add.box({ y: 2, x: x + 2, z: 0.5, mass: 0 }, { custom: mat2 })
       this.third.physics.add.constraints.pointToPoint(box1.body, box2.body, {
         // the offset from the center of each object
-        pivot: { x: 1.25 / 2, y: -0.5 },
-        targetPivot: { x: -1.25 / 2, y: -0.5 }
+        pivotA: { x: 1.25 / 2, y: -0.5 },
+        pivotB: { x: -1.25 / 2, y: -0.5 }
       })
     }
 
