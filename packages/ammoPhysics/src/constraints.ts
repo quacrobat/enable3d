@@ -46,43 +46,118 @@ export default class Constraints {
           pivot?: XYZ
           targetPivot?: XYZ
         }
-      ) => this.pointToPoint(body, targetBody, config)
+      ) => this.pointToPoint(body, targetBody, config),
+      dof: (bodyA: PhysicsBody, bodyB: PhysicsBody, config: any = {}) => this.dof(bodyA, bodyB, config)
     }
   }
 
-  private getTransform(body: Ammo.btRigidBody, targetBody: Ammo.btRigidBody) {
-    const bodyTransform = body
-      .getCenterOfMassTransform()
-      .inverse()
-      .op_mul(targetBody.getWorldTransform())
-    const targetTransform = new Ammo.btTransform()
-    targetTransform.setIdentity()
-    return { body: bodyTransform, target: targetTransform }
+  private getTransform(
+    bodyA: Ammo.btRigidBody,
+    bodyB: Ammo.btRigidBody,
+    offset: { x: number; y: number; z: number } = { x: 0, y: -0.5, z: 0 },
+    center: boolean = true
+  ) {
+    const centerVector = (v1: Ammo.btVector3, v2: Ammo.btVector3) => {
+      var dx = (v1.x() - v2.x()) / 2 + offset.x
+      var dy = (v1.y() - v2.y()) / 2 + offset.y
+      var dz = (v1.z() - v2.z()) / 2 + offset.z
+      return new Ammo.btVector3(dx, dy, dz)
+    }
+
+    const transformB = new Ammo.btTransform()
+    transformB.setIdentity()
+
+    if (!center) {
+      // offset
+      transformB.setOrigin(new Ammo.btVector3(offset.x, offset.y, offset.z))
+
+      const transformA = bodyA
+        .getCenterOfMassTransform()
+        .inverse()
+        .op_mul(bodyB.getWorldTransform())
+        .op_mul(transformB)
+
+      return { transformA: transformA, transformB: transformB }
+    } else {
+      const center = centerVector(bodyA.getWorldTransform().getOrigin(), bodyB.getWorldTransform().getOrigin())
+
+      const transformB = new Ammo.btTransform()
+      transformB.setIdentity()
+      transformB.setOrigin(center)
+
+      const transformA = bodyA
+        .getCenterOfMassTransform()
+        .inverse()
+        .op_mul(bodyB.getWorldTransform())
+
+      transformA.op_mul(transformB)
+
+      console.log(transformA.getOrigin().x())
+      console.log(transformB.getOrigin().x())
+
+      return { transformA: transformA, transformB: transformB }
+    }
   }
 
-  private lock(body: PhysicsBody, targetBody: PhysicsBody) {
-    const transform = this.getTransform(body.ammo, targetBody.ammo)
+  private lock(bodyA: PhysicsBody, bodyB: PhysicsBody) {
+    const zero = { x: 0, y: 0, z: 0 }
+    return this.dof(bodyA, bodyB, { angularLowerLimit: zero, angularUpperLimit: zero })
+  }
+
+  private dof(
+    bodyA: PhysicsBody,
+    bodyB: PhysicsBody,
+    config: { linearLowerLimit?: XYZ; linearUpperLimit?: XYZ; angularLowerLimit?: XYZ; angularUpperLimit?: XYZ } = {}
+  ) {
+    const transform = this.getTransform(bodyA.ammo, bodyB.ammo)
+
     const constraint = new Ammo.btGeneric6DofConstraint(
-      body.ammo,
-      targetBody.ammo,
-      transform.body,
-      transform.target,
+      bodyA.ammo,
+      bodyB.ammo,
+      transform.transformA,
+      transform.transformB,
       true
     )
-    const zero = new Ammo.btVector3(0, 0, 0)
-    //TODO: allow these to be configurable
-    constraint.setLinearLowerLimit(zero)
-    constraint.setLinearUpperLimit(zero)
-    constraint.setAngularLowerLimit(zero)
-    constraint.setAngularUpperLimit(zero)
-    this.physicsWorld.addConstraint(constraint)
+
+    const { linearLowerLimit, linearUpperLimit, angularLowerLimit, angularUpperLimit } = config
+
+    const toAmmoV3 = (v?: XYZ, d: number = 0) => {
+      return new Ammo.btVector3(
+        typeof v?.x !== 'undefined' ? v.x : d,
+        typeof v?.y !== 'undefined' ? v.y : d,
+        typeof v?.z !== 'undefined' ? v.z : d
+      )
+    }
+
+    const lll = toAmmoV3(linearLowerLimit)
+    const lul = toAmmoV3(linearUpperLimit)
+    const all = toAmmoV3(angularLowerLimit, -Math.PI)
+    const aul = toAmmoV3(angularUpperLimit, Math.PI)
+    // const all = toAmmoV3(angularLowerLimit, -Math.PI / 8)
+    // const aul = toAmmoV3(angularUpperLimit, Math.PI / 8)
+
+    console.log(all.x())
+
+    constraint.setLinearLowerLimit(lll)
+    constraint.setLinearUpperLimit(lul)
+    constraint.setAngularLowerLimit(all)
+    constraint.setAngularUpperLimit(aul)
+
+    Ammo.destroy(lll)
+    Ammo.destroy(lul)
+    Ammo.destroy(all)
+    Ammo.destroy(aul)
+
+    this.physicsWorld.addConstraint(constraint, false)
+
+    return constraint
   }
 
-  private fixed(body: PhysicsBody, targetBody: PhysicsBody) {
-    const transform = this.getTransform(body.ammo, targetBody.ammo)
-    transform.body.setRotation(body.ammo.getWorldTransform().getRotation())
-    transform.target.setRotation(targetBody.ammo.getWorldTransform().getRotation())
-    const constraint = new Ammo.btFixedConstraint(body.ammo, targetBody.ammo, transform.body, transform.target)
+  private fixed(bodyA: PhysicsBody, bodyB: PhysicsBody) {
+    const transform = this.getTransform(bodyA.ammo, bodyB.ammo)
+    transform.transformA.setRotation(bodyA.ammo.getWorldTransform().getRotation())
+    transform.transformB.setRotation(bodyB.ammo.getWorldTransform().getRotation())
+    const constraint = new Ammo.btFixedConstraint(bodyA.ammo, bodyB.ammo, transform.transformA, transform.transformB)
     this.physicsWorld.addConstraint(constraint)
   }
 
@@ -101,8 +176,8 @@ export default class Constraints {
     const constraint = new Ammo.btGeneric6DofSpringConstraint(
       body.ammo,
       targetBody.ammo,
-      transform.body,
-      transform.target,
+      transform.transformA,
+      transform.transformB,
       true
     )
 
@@ -127,7 +202,13 @@ export default class Constraints {
   private slider(body: PhysicsBody, targetBody: PhysicsBody) {
     const transform = this.getTransform(body.ammo, targetBody.ammo)
     //TODO: support setting linear and angular limits
-    const constraint = new Ammo.btSliderConstraint(body.ammo, targetBody.ammo, transform.body, transform.target, true)
+    const constraint = new Ammo.btSliderConstraint(
+      body.ammo,
+      targetBody.ammo,
+      transform.transformA,
+      transform.transformB,
+      true
+    )
     constraint.setLowerLinLimit(-1)
     constraint.setUpperLinLimit(1)
     // constraint.setLowerAngLimit();
@@ -139,15 +220,15 @@ export default class Constraints {
     body: PhysicsBody,
     targetBody: PhysicsBody,
     config: {
-      pivot?: XYZ
-      targetPivot?: XYZ
+      pivotA?: XYZ
+      pivotB?: XYZ
       axis?: XYZ
       targetAxis?: XYZ
     } = {}
   ) {
-    const { pivot, targetPivot, axis, targetAxis } = config
-    const pivotV3 = new Ammo.btVector3(pivot?.x || 0, pivot?.y || 0, pivot?.z || 0)
-    const targetPivotV3 = new Ammo.btVector3(targetPivot?.x || 0, targetPivot?.y || 0, targetPivot?.z || 0)
+    const { pivotA, pivotB, axis, targetAxis } = config
+    const pivotV3 = new Ammo.btVector3(pivotA?.x || 0, pivotA?.y || 0, pivotA?.z || 0)
+    const targetPivotV3 = new Ammo.btVector3(pivotB?.x || 0, pivotB?.y || 0, pivotB?.z || 0)
     const axisV3 = new Ammo.btVector3(axis?.x || 0, axis?.y || 0, axis?.z || 1)
     const targetAxisV3 = new Ammo.btVector3(targetAxis?.x || 0, targetAxis?.y || 0, targetAxis?.z || 1)
     const constraint = new Ammo.btHingeConstraint(
