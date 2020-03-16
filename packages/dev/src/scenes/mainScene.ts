@@ -76,6 +76,14 @@ export default class MainScene extends Scene3D {
       })
     }
 
+    const spring = (x: number) => {
+      let box1 = this.third.physics.add.box({ y: 2, x: x, z: 0, mass: 0 }, { custom: mat1 })
+      let box2 = this.third.physics.add.box({ y: 1, x: x, z: 0, mass: 2 }, { custom: mat2 })
+      let box3 = this.third.physics.add.box({ y: 0, x: x, z: 0, mass: 8 }, { custom: mat3 })
+      this.third.physics.add.constraints.spring(box1.body, box2.body, { damping: 250 })
+      this.third.physics.add.constraints.spring(box2.body, box3.body, { damping: 20 })
+    }
+
     const slider = (x: number) => {
       let box1 = this.third.physics.add.cylinder(
         { height: 6, y: 2, x: x, radiusTop: 0.6, radiusBottom: 0.6, collisionFlags: 6, mass: 100 },
@@ -91,10 +99,11 @@ export default class MainScene extends Scene3D {
       this.third.physics.add.constraints.slider(box1.body, box2.body)
     }
 
-    pointToPoint(-6)
-    dof(6)
-    hinge(2)
-    slider(-2)
+    pointToPoint(-8)
+    dof(8)
+    hinge(4)
+    spring(0)
+    slider(-4)
   }
 
   update() {

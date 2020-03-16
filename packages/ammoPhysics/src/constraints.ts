@@ -22,7 +22,7 @@ export default class Constraints {
       spring: (
         body: PhysicsBody,
         targetBody: PhysicsBody,
-        config: {
+        config?: {
           stiffness?: number
           damping?: number
           angularLock?: boolean
