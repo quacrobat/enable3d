@@ -35,8 +35,8 @@ export default class Constraints {
         config: {
           pivotA?: XYZ
           pivotB?: XYZ
-          axis?: XYZ
-          targetAxis?: XYZ
+          axisA?: XYZ
+          axisB?: XYZ
         }
       ) => this.hinge(body, targetBody, config),
       coneTwist: (bodyA: PhysicsBody, bodyB: PhysicsBody, pivotA: XYZ = {}, pivotB: XYZ = {}) =>
@@ -224,20 +224,48 @@ export default class Constraints {
     this.physicsWorld.addConstraint(constraint)
   }
 
-  private slider(body: PhysicsBody, targetBody: PhysicsBody) {
-    const transform = this.getTransform(body.ammo, targetBody.ammo)
+  // https://pybullet.org/Bullet/phpBB3/viewtopic.php?f=9&t=12690&p=42152&hilit=btSliderConstraint#p42152
+  private slider(bodyA: PhysicsBody, bodyB: PhysicsBody) {
+    const transform = this.getTransform(bodyA.ammo, bodyB.ammo)
+
+    // var rotation = transform.transformA.getRotation()
+    // rotation.setEulerZYX(1, 1, 1)
+    // transform.transformA.setRotation(rotation)
+
+    // var rotation = transform.transformB.getRotation()
+    // rotation.setEulerZYX(1, 1, 1)
+    // transform.transformB.setRotation(rotation)
+
+    // const pi = Math.PI / 8
+    // transform.transformA.setRotation(new Ammo.btQuaternion(pi, pi, pi, 1))
+    // transform.transformB.setRotation(new Ammo.btQuaternion(pi, pi, pi, 1))
+    // const bla1 = new Ammo.btTransform()
+    // bla1.setIdentity()
+    // var rotation = bla1.getRotation()
+    // // rotation.setEulerZYX(1, 1, 1)
+
+    // const bla2 = new Ammo.btTransform()
+    // bla2.setIdentity()
+    const rotation = transform.transformA.getRotation()
+    rotation.setEulerZYX(Math.PI / 2, 0, 0)
+    transform.transformA.setRotation(rotation)
+
+    transform.transformB.setRotation(rotation)
+
     //TODO: support setting linear and angular limits
     const constraint = new Ammo.btSliderConstraint(
-      body.ammo,
-      targetBody.ammo,
+      bodyA.ammo,
+      bodyB.ammo,
       transform.transformA,
       transform.transformB,
       true
     )
-    constraint.setLowerLinLimit(-1)
-    constraint.setUpperLinLimit(1)
-    // constraint.setLowerAngLimit();
-    // constraint.setUpperAngLimit();
+
+    constraint.setLowerLinLimit(-5)
+    constraint.setUpperLinLimit(5)
+    constraint.setLowerAngLimit(0)
+    constraint.setUpperAngLimit(0)
+
     this.physicsWorld.addConstraint(constraint)
   }
 
@@ -247,15 +275,15 @@ export default class Constraints {
     config: {
       pivotA?: XYZ
       pivotB?: XYZ
-      axis?: XYZ
-      targetAxis?: XYZ
+      axisA?: XYZ
+      axisB?: XYZ
     } = {}
   ) {
-    const { pivotA, pivotB, axis, targetAxis } = config
+    const { pivotA, pivotB, axisA, axisB } = config
     const pivotV3 = new Ammo.btVector3(pivotA?.x || 0, pivotA?.y || 0, pivotA?.z || 0)
     const targetPivotV3 = new Ammo.btVector3(pivotB?.x || 0, pivotB?.y || 0, pivotB?.z || 0)
-    const axisV3 = new Ammo.btVector3(axis?.x || 0, axis?.y || 0, axis?.z || 1)
-    const targetAxisV3 = new Ammo.btVector3(targetAxis?.x || 0, targetAxis?.y || 0, targetAxis?.z || 1)
+    const axisV3 = new Ammo.btVector3(axisA?.x || 0, axisA?.y || 0, axisA?.z || 0)
+    const targetAxisV3 = new Ammo.btVector3(axisB?.x || 0, axisB?.y || 0, axisB?.z || 0)
     const constraint = new Ammo.btHingeConstraint(
       body.ammo,
       targetBody.ammo,
@@ -277,7 +305,13 @@ export default class Constraints {
     frameB.setIdentity()
     frameB.getOrigin().setValue(pivotB?.x || 0, pivotB?.y || 0, pivotB?.z || 0)
 
-    const constraint = new Ammo.btConeTwistConstraint(bodyA.ammo, bodyB.ammo, frameA, frameB)
+    const t = this.getTransform(bodyA.ammo, bodyB.ammo)
+
+    const constraint = new Ammo.btConeTwistConstraint(bodyB.ammo, bodyA.ammo, frameA, frameB)
+    // @ts-ignore
+    constraint.setLimit(1, 1, Math.PI / 8)
+
+    constraint.setAngularOnly(true)
 
     this.physicsWorld.addConstraint(constraint)
   }
