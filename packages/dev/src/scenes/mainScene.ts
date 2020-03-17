@@ -24,7 +24,7 @@ export default class MainScene extends Scene3D {
     let i = 2
 
     const changeMode = () => {
-      let mode = i % 3 === 0 ? 2048 : i % 3 === 1 ? 4096 : 1 + 2048 + 4096
+      let mode = i % 3 === 0 ? 1 + 2048 : i % 3 === 1 ? 1 + 4096 : 1 + 2048 + 4096
       this.third.physics.debug.mode(mode)
       i++
     }
