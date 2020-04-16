@@ -15,6 +15,15 @@ export default class Constraints {
   public physicsWorld: Ammo.btDiscreteDynamicsWorld
 
   constructor() {}
+
+  private toAmmoV3(v?: XYZ, d: number = 0) {
+    return new Ammo.btVector3(
+      typeof v?.x !== 'undefined' ? v.x : d,
+      typeof v?.y !== 'undefined' ? v.y : d,
+      typeof v?.z !== 'undefined' ? v.z : d
+    )
+  }
+
   protected get addConstraints() {
     return {
       lock: (body: PhysicsBody, targetBody: PhysicsBody) => this.lock(body, targetBody),
@@ -146,22 +155,10 @@ export default class Constraints {
 
     const { linearLowerLimit, linearUpperLimit, angularLowerLimit, angularUpperLimit } = config
 
-    const toAmmoV3 = (v?: XYZ, d: number = 0) => {
-      return new Ammo.btVector3(
-        typeof v?.x !== 'undefined' ? v.x : d,
-        typeof v?.y !== 'undefined' ? v.y : d,
-        typeof v?.z !== 'undefined' ? v.z : d
-      )
-    }
-
-    const lll = toAmmoV3(linearLowerLimit)
-    const lul = toAmmoV3(linearUpperLimit)
-    const all = toAmmoV3(angularLowerLimit, -Math.PI)
-    const aul = toAmmoV3(angularUpperLimit, Math.PI)
-    // const all = toAmmoV3(angularLowerLimit, -Math.PI / 8)
-    // const aul = toAmmoV3(angularUpperLimit, Math.PI / 8)
-
-    console.log(all.x())
+    const lll = this.toAmmoV3(linearLowerLimit)
+    const lul = this.toAmmoV3(linearUpperLimit)
+    const all = this.toAmmoV3(angularLowerLimit, -Math.PI)
+    const aul = this.toAmmoV3(angularUpperLimit, Math.PI)
 
     constraint.setLinearLowerLimit(lll)
     constraint.setLinearUpperLimit(lul)
